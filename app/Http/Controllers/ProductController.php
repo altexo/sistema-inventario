@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Auth\RegisterController;
 use App\Products;
 use Illuminate\Http\Request;
+use Auth;
 
-class ProductController extends Controller
+class ProductController extends RegisterController
 {
     /**
      * Display a listing of the resource.
@@ -24,7 +26,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -82,4 +84,6 @@ class ProductController extends Controller
     {
         //
     }
+
+
 }

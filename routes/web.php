@@ -18,4 +18,11 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 //Route::get('/users', 'UserController@index')->name('users.all');
-Route::resource('users', 'UserController')->middleware(['auth','auth.admin']);
+Route::resource('users', 'UserController')->middleware(['auth','auth.admin'])->names([
+    'index' => 'users.index',
+    'create' => 'users.create',
+    'store' => 'users.store',
+    'edit' => 'users.edit',
+    'update' => 'users.update',
+    'destroy' => 'users.destroy'
+]);;

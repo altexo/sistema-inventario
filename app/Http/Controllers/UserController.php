@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
-use Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Session;
 class UserController extends Controller
 {
     /**
@@ -14,6 +16,7 @@ class UserController extends Controller
      */
     public function index()
     {
+       
         $users = User::with('role')->get();
         return view('user.users', ['users' =>$users]);
     }
@@ -25,7 +28,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('user.create');
     }
 
     /**
@@ -36,7 +39,17 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //Hacer validaciones
+
+        // return $request->validate(
+        //     [
+        //         'name' => ['required', 'string', 'max:255'],
+        //         'password' => ['required', 'string', 'min:8', 'confirmed'],
+        //         'username' => ['required', 'unique','string', 'min:5'],
+        //         'role' => ['required', 'not_in:0']
+        //     ]);
+        return $this->createUser($request->all());
+      
     }
 
     /**
@@ -58,7 +71,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+
+        return view('user.edit', ['user'=>$user]);
     }
 
     /**
@@ -70,7 +84,18 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+
+        $user->name = $request->name;
+        $user->username = $request->username;
+        $user->role_id = $request->role;
+        if($request->password != null){
+            $user->password =  Hash::make($request->password);
+        }
+
+        $user->save();
+        Session::flash('success', 'El usuario se actualizo con exito'); 
+        return $this->edit($user);
+
     }
 
     /**
@@ -82,5 +107,25 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         //
+    }
+
+
+    /**
+     * Create a new user instance after a valid registration.
+     *
+     * @param  array  $data
+     * @return \App\User
+     */
+    protected function createUser(array $data)
+    {
+        
+        User::create([
+            'name' => $data['name'],
+            'username' => $data['username'],
+            'password' => Hash::make($data['password']),
+            'role' => $data['role'],
+        ]);
+
+        return view('user.create')->with('success', 'El usuario se creó con exito.');
     }
 }

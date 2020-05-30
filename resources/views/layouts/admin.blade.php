@@ -15,22 +15,19 @@
 	    <!-- Sidebar -->
 	    <nav id="sidebar">
 	        <div class="sidebar-header">
-            <h3>Bootstrap Sidebar</h3>
+            <h3>CAPYTAN</h3>
         </div>
 
         <ul class="list-unstyled components">
-            <p>Dummy Heading</p>
+            {{-- <p>Sistmea Inven</p> --}}
             <li class="active">
-                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Usuarios</a>
                 <ul class="collapse list-unstyled" id="homeSubmenu">
                     <li>
-                        <a href="#">Home 1</a>
+                    <a href="{{route('users.index')}}">Ver Usuarios</a>
                     </li>
                     <li>
-                        <a href="#">Home 2</a>
-                    </li>
-                    <li>
-                        <a href="#">Home 3</a>
+                    <a href="{{route('users.create')}}">Nuevo Usuario</a>
                     </li>
                 </ul>
             </li>
