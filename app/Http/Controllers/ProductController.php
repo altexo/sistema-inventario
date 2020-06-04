@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Products;
 use Illuminate\Http\Request;
-use Auth;
 
-class ProductController extends RegisterController
+
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,8 @@ class ProductController extends RegisterController
      */
     public function index()
     {
-        //
+        $products = Products::paginate(15);
+        return view('products.products', ['products'=>$products])->with('status', 'Hi from controller');
     }
 
     /**

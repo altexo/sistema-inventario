@@ -25,4 +25,14 @@ Route::resource('users', 'UserController')->middleware(['auth','auth.admin'])->n
     'edit' => 'users.edit',
     'update' => 'users.update',
     'destroy' => 'users.destroy'
-]);;
+]);
+
+Route::resource('products', 'ProductController')->names([
+    'index' => 'products.index',
+    'create' => 'products.create',
+    'store' => 'products.store',
+    'edit' => 'products.edit',
+    'update' => 'products.update',
+    'destroy' => 'products.destroy'
+]);
+

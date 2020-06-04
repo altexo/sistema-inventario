@@ -13,7 +13,7 @@
       </div>
 
 @endif
-<button href="{{route('users.index')}}" class="btn btn-default mb-3">Cancelar</button>
+<a href="{{route('users.index')}}" class="btn btn-danger mb-3"><img src="{{url('images/arrow-left-solid.svg')}}" alt="Edit" class="svg-action-icon">  Cancelar</a>
 
     <div class="col-md-8 card p-3 shadow p-4 mb-5 bg-white rounded">
         <form method="POST" action="{{route('users.update', ['user' => $user->id])}}">

@@ -106,7 +106,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        if($user->delete()){
+            return redirect('users')->with('success', 'El usuario se borro con exito.');
+        }
+        
     }
 
 
