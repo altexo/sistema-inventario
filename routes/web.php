@@ -13,9 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 
 //Route::get('/users', 'UserController@index')->name('users.all');
 Route::resource('users', 'UserController')->middleware(['auth','auth.admin'])->names([
@@ -33,6 +34,13 @@ Route::resource('products', 'ProductController')->names([
     'store' => 'products.store',
     'edit' => 'products.edit',
     'update' => 'products.update',
-    'destroy' => 'products.destroy'
+    'destroy' => 'products.destroy',
+    'show' => 'products.show'
+]);
+
+Route::resource('stock', 'StockEntryController')->names([
+    'index' => 'stock.index',
+    'store' => 'stock.store',
+    'destroy' => 'stock.destroy'
 ]);
 

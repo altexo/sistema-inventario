@@ -27,6 +27,26 @@
     <div class="wrapper">
          @yield('navbar')
             <main class="py-4 col-md-12 mt-4" id="content">
+                <div class="col-md-12">
+                    @if ($messaje = \Session::get('success'))
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            {{$messaje}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <?php \Session::forget('success'); ?>
+                    @endif
+                    @if ($messaje = \Session::get('error'))
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            {{$messaje}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <?php \Session::forget('error'); ?>   
+                    @endif
+                </div>
                 @yield('content')
             </main>
         </div>
