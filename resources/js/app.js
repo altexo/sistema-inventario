@@ -21,6 +21,9 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('add-to-stock-component', require('./components/AddToStockComponent').default);
+Vue.component('sales-page', require('./pages/SalesPage.vue').default);
+Vue.component('sale-grid-component', require('./components/SaleGridComponent.vue').default)
+Vue.component('search-bar-component', require('./components/SearchbarComponent.vue').default)
 
 
 /**

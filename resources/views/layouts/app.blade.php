@@ -24,9 +24,9 @@
 </head>
 <body>
     <div id="app">
-    <div class="wrapper">
+        <div class="wrapper">
          @yield('navbar')
-            <main class="py-4 col-md-12 mt-4" id="content">
+            <main class="py-4 col-md-12 mt-4" id="content" style="max-width: 87% !important;">
                 <div class="col-md-12">
                     @if ($messaje = \Session::get('success'))
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -51,5 +51,8 @@
             </main>
         </div>
     </div>
+    <footer>
+        @yield('footer')
+    </footer>
 </body>
 </html>

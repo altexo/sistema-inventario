@@ -27,7 +27,9 @@ Route::resource('users', 'UserController')->middleware(['auth','auth.admin'])->n
     'update' => 'users.update',
     'destroy' => 'users.destroy'
 ]);
-
+Route::get('products/search', function(){
+    return response()->json([['title'=> 'Mojarra', 'url' => '', 'id'=>1]]);
+});
 Route::resource('products', 'ProductController')->names([
     'index' => 'products.index',
     'create' => 'products.create',
@@ -43,4 +45,6 @@ Route::resource('stock', 'StockEntryController')->names([
     'store' => 'stock.store',
     'destroy' => 'stock.destroy'
 ]);
+
+Route::get('sale', 'SaleController@index')->name('sales.sale');
 

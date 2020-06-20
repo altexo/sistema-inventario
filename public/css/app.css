@@ -1264,7 +1264,7 @@ pre code {
   }
 
   .col-md-12 {
-    /* flex: 0 0 100%; */
+    flex: 0 0 100%;
     max-width: 100%;
   }
 
