@@ -27,9 +27,7 @@ Route::resource('users', 'UserController')->middleware(['auth','auth.admin'])->n
     'update' => 'users.update',
     'destroy' => 'users.destroy'
 ]);
-Route::get('products/search', function(){
-    return response()->json([['title'=> 'Mojarra', 'url' => '', 'id'=>1]]);
-});
+Route::get('products/search', 'ProductController@searchProduct');
 Route::resource('products', 'ProductController')->names([
     'index' => 'products.index',
     'create' => 'products.create',

@@ -14,6 +14,7 @@
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 0;
+    border-radius: 20px;
 }
 .list-group{
     position:absolute;
@@ -25,7 +26,7 @@
     border: 0;
     background: none;
     /** belows styles are working good */
-    padding: 2px 5px;
+    padding: 5px 20px;
     margin-top: 2px;
     position: absolute;
     right:0;
@@ -34,7 +35,7 @@
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
-    color:#D9230F;
+    color:#0877b1;
     cursor: unset;
     z-index: 2;
 }
@@ -327,4 +328,11 @@ ul ul a {
 .sale-table{
     padding-right: 0px;
     padding-left: 0px;
+}
+
+/* Main content */
+@media (min-width: 768px){
+    .main-content{
+        max-width: 83% !important;
+    }
 }

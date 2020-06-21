@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Auth\RegisterController;
+use Spatie\Searchable\Search;
 use App\Product;
 use App\StockEntry;
 use Illuminate\Http\Request;
@@ -142,5 +143,14 @@ class ProductController extends Controller
         //  Session::put('success', 'Connection timeout');
     }
 
-    
+    public function searchProduct(Request $request){
+        if(!$request->input('query')){
+            return null;
+        }
+        $results = (new Search())
+        ->registerModel(Product::class, 'name')
+        ->search($request->input('query'));
+        
+        return response()->json($results);
+    }    
 }

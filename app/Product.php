@@ -2,10 +2,12 @@
 
 namespace App;
 
+use Spatie\Searchable\Searchable;
+use Spatie\Searchable\SearchResult;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
+class Product extends Model implements Searchable
 {
      use SoftDeletes;
 
@@ -18,6 +20,13 @@ class Product extends Model
                             'created_by',
                             'updated_by',
                         ]);
+     }
+
+     public function getSearchResult(): SearchResult
+     {
+     //    $url = route('sales.sale', $this->id);
+          
+        return new SearchResult($this, $this->name, $this->id);
      }
 
 
