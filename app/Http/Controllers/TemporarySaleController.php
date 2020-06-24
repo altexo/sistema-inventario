@@ -35,7 +35,13 @@ class TemporarySaleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $temporarySale = new TemporarySale;
+        $temporarySale->product_id = $request->item['details']['id'];
+        $temporarySale->sale_price = $request->item['toAdd']['price'];
+        $temporarySale->quantity = $request->item['toAdd']['quantity'];
+        $temporarySale->save();
+        return $temporarySale;
     }
 
     /**

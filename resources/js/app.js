@@ -4,9 +4,13 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
 
+import BootstrapVue from 'bootstrap-vue' //Importing
 window.Vue = require('vue');
+Vue.use(BootstrapVue) // Telling Vue to use this in whole application
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
 
 /**
  * The following block of code may be used to automatically register your

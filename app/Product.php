@@ -26,7 +26,7 @@ class Product extends Model implements Searchable
      {
      //    $url = route('sales.sale', $this->id);
           
-        return new SearchResult($this, $this->name, $this->id);
+        return new SearchResult($this, $this->name);
      }
 
 

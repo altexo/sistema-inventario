@@ -46,3 +46,6 @@ Route::resource('stock', 'StockEntryController')->names([
 
 Route::get('sale', 'SaleController@index')->name('sales.sale');
 
+Route::post('temp/sale/store', 'TemporarySaleController@store');
+Route::get('temp/sale/get', 'TemporarySaleController@index');
+

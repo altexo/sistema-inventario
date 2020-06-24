@@ -17,6 +17,7 @@ class CreateTemporarySaleTable extends Migration
             $table->id();
             $table->unsignedBigInteger('product_id');
             $table->double('quantity', 15,2);
+            $table->double('sale_price', 10,2);
             $table->timestamps();
             
             $table->foreign('product_id')->references('id')->on('products');

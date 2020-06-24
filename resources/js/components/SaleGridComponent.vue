@@ -17,18 +17,6 @@
           <td>10000</td>
           <td>208000</td>
         </tr>
-        <tr>
-          <td>Camaron</td>
-          <td>80.80</td>
-          <td>10000</td>
-          <td>800000</td>
-        </tr>
-        <tr>
-          <td>Robalo</td>
-          <td>100.80</td>
-          <td>10000</td>
-          <td>10008000</td>
-        </tr>
       </tbody>
     </table>
     <div class="col-md-12 shadow p-2  row d-flex justify-content-end">
