@@ -2024,6 +2024,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -2053,7 +2055,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      products: [],
+      total: 0
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('temp/sale/get').then(function (response) {
+      return console.log(response.data), _this.products = response.data.in_sale, _this.total = response.data.total;
+    })["catch"](function (err) {
+      return console.log(err);
+    });
+  }
+});
 
 /***/ }),
 
@@ -2195,6 +2215,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -2217,12 +2239,46 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {};
+    return {
+      componentKey: 0,
+      saleDetails: {
+        printSale: true,
+        invoiceSale: false,
+        noteSale: null
+      }
+    };
   },
   methods: {
-    handleAddProduct: function handleAddProduct(item) {// console.log('item from child', item)
+    handleAddProduct: function handleAddProduct(item) {
+      this.componentKey += 1; // console.log('item from child', item)
+    },
+    saveSale: function saveSale() {
+      var _this = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('sale/save', this.saleDetails).then(function (response) {
+        return _this.handleAddProduct();
+      })["catch"](function (err) {
+        return err;
+      });
+      console.log(this.saleDetails);
     }
   }
 });
@@ -49050,55 +49106,71 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "col-md-12 sale-table" }, [
+    _c("table", { staticClass: "table table-borderless table-hover" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.products, function(product) {
+          return _c("tr", { key: product.id }, [
+            _c("td", [_vm._v(_vm._s(product.product.name))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(product.sale_price))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(product.quantity))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(product.sale_price * product.quantity))]),
+            _vm._v(" "),
+            _vm._m(1, true)
+          ])
+        }),
+        0
+      )
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "col-md-12 shadow p-2  row d-flex justify-content-end" },
+      [
+        _c("h4", { staticClass: "mt-1 mr-3 text-right " }, [
+          _vm._v("Total:  ")
+        ]),
+        _vm._v(" "),
+        _c("h4", { staticClass: "mt-1 mr-3 text-right " }, [
+          _vm._v(" " + _vm._s(_vm.total))
+        ])
+      ]
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-12 sale-table" }, [
-      _c("table", { staticClass: "table table-borderless table-hover" }, [
-        _c("thead", [
-          _c("tr", [
-            _c("th", { attrs: { scope: "col" } }, [_vm._v("Nombre")]),
-            _vm._v(" "),
-            _c("th", { attrs: { scope: "col" } }, [_vm._v("Precio")]),
-            _vm._v(" "),
-            _c("th", { attrs: { scope: "col" } }, [_vm._v("Cantidad")]),
-            _vm._v(" "),
-            _c("th", { attrs: { scope: "col" } }, [_vm._v("Total")]),
-            _vm._v(" "),
-            _c("th")
-          ])
-        ]),
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Nombre")]),
         _vm._v(" "),
-        _c("tbody", [
-          _c("tr", [
-            _c("td", [_vm._v("Mojarra")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("20.80")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("10000")]),
-            _vm._v(" "),
-            _c("td", [_vm._v("208000")])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-md-12 shadow p-2  row d-flex justify-content-end" },
-        [
-          _c("h4", { staticClass: "mt-1 mr-3 text-right " }, [
-            _vm._v("Total:  ")
-          ]),
-          _vm._v(" "),
-          _c("h4", { staticClass: "mt-1 mr-3 text-right " }, [
-            _vm._v(" 8,000.00")
-          ])
-        ]
-      )
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Precio")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Cantidad")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Total")]),
+        _vm._v(" "),
+        _c("th")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("button", { staticClass: "btn btn-primary btn-sm" }, [
+        _vm._v("Delete")
+      ])
     ])
   }
 ]
@@ -49322,48 +49394,238 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "col-md-12" }, [
-    _c("h2", [_vm._v("Venta")]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "col-md-12 shadow-lg p-4 mb-5 rounded bg-white" },
-      [
-        _c(
-          "div",
-          { staticClass: "col-md-9 shadow p-4 mb-1 bg-white rounded" },
-          [
-            _c("search-bar-component", {
-              on: { addedProduct: _vm.handleAddProduct }
+  return _c(
+    "div",
+    { staticClass: "col-md-12" },
+    [
+      _c("h2", [_vm._v("Venta")]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "col-md-12 shadow-lg p-4 mb-5 rounded bg-white" },
+        [
+          _c(
+            "div",
+            { staticClass: "col-md-9 shadow p-4 mb-1 bg-white rounded" },
+            [
+              _c("search-bar-component", {
+                on: { addedProduct: _vm.handleAddProduct }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "col-md-9 shadow p-4 mb-5 bg-white rounded border" },
+            [_c("sale-grid-component", { key: _vm.componentKey })],
+            1
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-9 d-flex justify-content-end" }, [
+            _c(
+              "button",
+              {
+                directives: [
+                  {
+                    name: "b-modal",
+                    rawName: "v-b-modal",
+                    value: "save-sale",
+                    expression: "'save-sale'"
+                  }
+                ],
+                staticClass: "btn btn-success"
+              },
+              [_vm._v("Finalizar Venta")]
+            )
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "b-modal",
+        {
+          attrs: {
+            variant: "bg-primary text-white",
+            id: "save-sale",
+            "hide-footer": "",
+            title: "Terminar venta"
+          }
+        },
+        [
+          _c("div", { staticClass: "form-check mb-1" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.saleDetails.printSale,
+                  expression: "saleDetails.printSale"
+                }
+              ],
+              staticClass: "form-check-input",
+              attrs: {
+                type: "checkbox",
+                value: "",
+                id: "printCheckbox",
+                checked: ""
+              },
+              domProps: {
+                checked: Array.isArray(_vm.saleDetails.printSale)
+                  ? _vm._i(_vm.saleDetails.printSale, "") > -1
+                  : _vm.saleDetails.printSale
+              },
+              on: {
+                change: function($event) {
+                  var $$a = _vm.saleDetails.printSale,
+                    $$el = $event.target,
+                    $$c = $$el.checked ? true : false
+                  if (Array.isArray($$a)) {
+                    var $$v = "",
+                      $$i = _vm._i($$a, $$v)
+                    if ($$el.checked) {
+                      $$i < 0 &&
+                        _vm.$set(
+                          _vm.saleDetails,
+                          "printSale",
+                          $$a.concat([$$v])
+                        )
+                    } else {
+                      $$i > -1 &&
+                        _vm.$set(
+                          _vm.saleDetails,
+                          "printSale",
+                          $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                        )
+                    }
+                  } else {
+                    _vm.$set(_vm.saleDetails, "printSale", $$c)
+                  }
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "form-check-label",
+                attrs: { for: "printCheckbox" }
+              },
+              [_vm._v("Imprimir")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-check" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.saleDetails.invoiceSale,
+                  expression: "saleDetails.invoiceSale"
+                }
+              ],
+              staticClass: "form-check-input",
+              attrs: { type: "checkbox", value: "", id: "invoiceCheckbox" },
+              domProps: {
+                checked: Array.isArray(_vm.saleDetails.invoiceSale)
+                  ? _vm._i(_vm.saleDetails.invoiceSale, "") > -1
+                  : _vm.saleDetails.invoiceSale
+              },
+              on: {
+                change: function($event) {
+                  var $$a = _vm.saleDetails.invoiceSale,
+                    $$el = $event.target,
+                    $$c = $$el.checked ? true : false
+                  if (Array.isArray($$a)) {
+                    var $$v = "",
+                      $$i = _vm._i($$a, $$v)
+                    if ($$el.checked) {
+                      $$i < 0 &&
+                        _vm.$set(
+                          _vm.saleDetails,
+                          "invoiceSale",
+                          $$a.concat([$$v])
+                        )
+                    } else {
+                      $$i > -1 &&
+                        _vm.$set(
+                          _vm.saleDetails,
+                          "invoiceSale",
+                          $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                        )
+                    }
+                  } else {
+                    _vm.$set(_vm.saleDetails, "invoiceSale", $$c)
+                  }
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c(
+              "label",
+              {
+                staticClass: "form-check-label",
+                attrs: { for: "invoiceCheckbox" }
+              },
+              [_vm._v("Facturar")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group mt-3" }, [
+            _c("label", { attrs: { for: "addNotetextarea" } }, [
+              _vm._v("Añadir Nota")
+            ]),
+            _vm._v(" "),
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.saleDetails.noteSale,
+                  expression: "saleDetails.noteSale"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { id: "addNotetextarea", rows: "3" },
+              domProps: { value: _vm.saleDetails.noteSale },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.saleDetails, "noteSale", $event.target.value)
+                }
+              }
             })
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "col-md-9 shadow p-4 mb-5 bg-white rounded border" },
-          [_c("sale-grid-component")],
-          1
-        ),
-        _vm._v(" "),
-        _vm._m(0)
-      ]
-    )
-  ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "align-items-end" },
+            [
+              _c("b-button", { attrs: { variant: "outline-danger" } }, [
+                _vm._v("Cancelar")
+              ]),
+              _vm._v(" "),
+              _c(
+                "b-button",
+                {
+                  attrs: { variant: "outline-primary" },
+                  on: { click: _vm.saveSale }
+                },
+                [_vm._v("Guardar Venta")]
+              )
+            ],
+            1
+          )
+        ]
+      )
+    ],
+    1
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-9 d-flex justify-content-end" }, [
-      _c("button", { staticClass: "btn btn-success" }, [
-        _vm._v("Finalizar Venta")
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

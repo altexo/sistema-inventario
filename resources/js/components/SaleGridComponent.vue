@@ -11,24 +11,37 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Mojarra</td>
-          <td>20.80</td>
-          <td>10000</td>
-          <td>208000</td>
+        <tr v-for="product in products" :key="product.id">
+          <td>{{product.product.name}}</td>
+          <td>{{product.sale_price}}</td>
+          <td>{{product.quantity}}</td>
+          <td>{{product.sale_price * product.quantity}}</td>
+          <td><button class="btn btn-primary btn-sm">Delete</button></td>
         </tr>
       </tbody>
     </table>
     <div class="col-md-12 shadow p-2  row d-flex justify-content-end">
        <h4 class="mt-1 mr-3 text-right ">Total:  </h4>
-       <h4 class="mt-1 mr-3 text-right "> 8,000.00</h4>
+       <h4 class="mt-1 mr-3 text-right "> {{total}}</h4>
     </div>
    
   </div>
 </template>
 
 <script>
-export default {};
+import axios from 'axios'
+export default {
+  data(){
+    return {
+      products: [],
+      total: 0
+    }
+  },
+  mounted(){
+    axios.get('temp/sale/get').then(response => (console.log(response.data), this.products = response.data.in_sale, this.total = response.data.total)).catch(err => (console.log(err)))
+    
+  }
+};
 </script>
 
 <style>

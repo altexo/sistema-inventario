@@ -5,9 +5,9 @@ namespace App;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
-class SalesDetails extends Pivot
+class SalesDetails extends Model
 {
-    use SalesDetails;
+    use SoftDeletes;
 
     protected $table = 'sales_details';
 }

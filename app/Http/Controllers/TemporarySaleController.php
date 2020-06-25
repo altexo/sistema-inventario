@@ -14,7 +14,12 @@ class TemporarySaleController extends Controller
      */
     public function index()
     {
-        
+        $total = 0;
+        $tempSales = TemporarySale::with('product')->get();
+        foreach($tempSales as $ts){
+            $total = $total+($ts->sale_price * $ts->quantity);
+        }
+        return response()->json(['in_sale'=>  $tempSales, 'total'=> $total]);
     }
 
     /**
@@ -35,7 +40,7 @@ class TemporarySaleController extends Controller
      */
     public function store(Request $request)
     {
-
+        //Faltan validaciones 
         $temporarySale = new TemporarySale;
         $temporarySale->product_id = $request->item['details']['id'];
         $temporarySale->sale_price = $request->item['toAdd']['price'];

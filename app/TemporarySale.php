@@ -9,6 +9,6 @@ class TemporarySale extends Model
     protected $table = "temporary_sale";
 
     public function product(){
-        return $this->belongsTo('App\Products');
+        return $this->belongsTo('App\Product');
     }
 }
