@@ -3,7 +3,7 @@
 @section('content')
     <div class="col-md-12 shadow-lg p-4 mb-5 bg-white rounded">
         <h2>Crear Producto</h2>
-        
+        <a href="{{route('products.index')}}" class="btn btn-danger mb-3 col-md-2"><img src="{{url('images/arrow-left-solid.svg')}}" alt="Edit" class="svg-action-icon-button">  Cancelar</a>
         <div class="col-md-12 shadow p-3 mb-5 bg-white rounded">
             <form method="POST" action="{{route('products.store')}}">
                 @csrf

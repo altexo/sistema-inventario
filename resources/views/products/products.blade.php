@@ -5,7 +5,7 @@
 
 
 	<h2>Productos</h2>
-	<button class="btn btn-primary mb-2 col-md-2">Nuevo Producto</button>
+	<a class="btn btn-primary mb-2 col-md-2" href="{{route('products.create')}}">Nuevo Producto</a>
 
 	
 	<div class="col-md-12 card p-4 shadow p-3 mb-5 bg-white rounded">

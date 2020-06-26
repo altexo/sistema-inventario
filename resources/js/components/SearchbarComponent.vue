@@ -26,7 +26,7 @@
     </div>
 
     <!-- Modal -->
-    <b-modal   ref="add-product-modal" variant="bg-primary text-white" id="modal-1" hide-footer :title="item.title">
+    <b-modal   ref="add-product-modal" header-class="bg-primary-dark text-white" id="modal-1" hide-footer :title="item.title">
       <p class="text-black">Disponible en inventario: <span>{{item.searchable.in_stock}}</span></p>
       <div class="form-group">
         <label for="priceInput">Precio de venta</label>

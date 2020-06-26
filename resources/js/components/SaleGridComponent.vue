@@ -2,8 +2,8 @@
   <div class="col-md-12 sale-table">
     <table class="table table-borderless table-hover">
       <thead>
-        <tr>
-          <th scope="col">Nombre</th>
+        <tr class="bg-dark text-white">
+          <th scope="col">Producto</th>
           <th scope="col">Precio</th>
           <th scope="col">Cantidad</th>
           <th scope="col">Total</th>
@@ -16,7 +16,7 @@
           <td>{{product.sale_price}}</td>
           <td>{{product.quantity}}</td>
           <td>{{product.sale_price * product.quantity}}</td>
-          <td><button class="btn btn-primary btn-sm">Delete</button></td>
+          <td><button class="btn btn-danger btn-sm">Borrar</button></td>
         </tr>
       </tbody>
     </table>

@@ -49150,8 +49150,8 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", [
-      _c("tr", [
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Nombre")]),
+      _c("tr", { staticClass: "bg-dark text-white" }, [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Producto")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Precio")]),
         _vm._v(" "),
@@ -49168,9 +49168,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("td", [
-      _c("button", { staticClass: "btn btn-primary btn-sm" }, [
-        _vm._v("Delete")
-      ])
+      _c("button", { staticClass: "btn btn-danger btn-sm" }, [_vm._v("Borrar")])
     ])
   }
 ]
@@ -49258,7 +49256,7 @@ var render = function() {
         {
           ref: "add-product-modal",
           attrs: {
-            variant: "bg-primary text-white",
+            "header-class": "bg-primary-dark text-white",
             id: "modal-1",
             "hide-footer": "",
             title: _vm.item.title
@@ -49406,7 +49404,7 @@ var render = function() {
         [
           _c(
             "div",
-            { staticClass: "col-md-9 shadow p-4 mb-1 bg-white rounded" },
+            { staticClass: "col-md-12 shadow p-4 mb-1 bg-white rounded" },
             [
               _c("search-bar-component", {
                 on: { addedProduct: _vm.handleAddProduct }
@@ -49417,12 +49415,14 @@ var render = function() {
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "col-md-9 shadow p-4 mb-5 bg-white rounded border" },
+            {
+              staticClass: "col-md-12 shadow p-4 mb-5 bg-white rounded border"
+            },
             [_c("sale-grid-component", { key: _vm.componentKey })],
             1
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-9 d-flex justify-content-end" }, [
+          _c("div", { staticClass: "col-md-12 d-flex justify-content-end" }, [
             _c(
               "button",
               {
@@ -49449,7 +49449,8 @@ var render = function() {
             variant: "bg-primary text-white",
             id: "save-sale",
             "hide-footer": "",
-            title: "Terminar venta"
+            title: "Terminar venta",
+            "header-class": "bg-primary-dark text-white"
           }
         },
         [

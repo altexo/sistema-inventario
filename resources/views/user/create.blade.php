@@ -1,9 +1,10 @@
 @extends('layouts.admin')
 
 @section('content')
-<h2>Registrar Nuevo Usuario</h2>
-
-    <div class="col-md-8 card p-3 shadow p-4 mb-5 bg-white rounded">
+<div class="card col-md-12 shadow-lg">
+<h2 class="mt-3">Registrar Nuevo Usuario</h2>
+<a href="{{route('users.index')}}" class="btn btn-danger mb-3 col-md-2"><img src="{{url('images/arrow-left-solid.svg')}}" alt="Edit" class="svg-action-icon-button">  Cancelar</a>
+    <div class="col-md-12 card p-3 shadow p-4 mb-5 bg-white rounded">
         <form method="POST" action="{{route('users.store')}}">
             @csrf
             <div class="form-group">
@@ -29,5 +30,5 @@
             <button type="submit" class="btn btn-primary">Guardad</button>
         </form>
     </div>
-
+</div>
 @endsection

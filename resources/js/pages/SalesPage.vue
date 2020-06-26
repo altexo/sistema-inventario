@@ -2,19 +2,19 @@
   <div class="col-md-12">
     <h2>Venta</h2>
     <div class="col-md-12 shadow-lg p-4 mb-5 rounded bg-white">
-      <div class="col-md-9 shadow p-4 mb-1 bg-white rounded">
+      <div class="col-md-12 shadow p-4 mb-1 bg-white rounded">
         <search-bar-component @addedProduct="handleAddProduct"></search-bar-component>
       </div>
-      <div class="col-md-9 shadow p-4 mb-5 bg-white rounded border">
+      <div class="col-md-12 shadow p-4 mb-5 bg-white rounded border">
         <!-- <h4>Productos</h4> -->
         <sale-grid-component :key="componentKey"></sale-grid-component>
       </div>
-      <div class="col-md-9 d-flex justify-content-end">
+      <div class="col-md-12 d-flex justify-content-end">
         <button class="btn btn-success" v-b-modal="'save-sale'">Finalizar Venta</button>
       </div>
     </div>
     <!-- Modal -->
-    <b-modal variant="bg-primary text-white" id="save-sale" hide-footer title="Terminar venta">
+    <b-modal variant="bg-primary text-white" id="save-sale" hide-footer title="Terminar venta" header-class="bg-primary-dark text-white">
       <div class="form-check mb-1">
         <input class="form-check-input" v-model="saleDetails.printSale" type="checkbox" value id="printCheckbox" checked />
         <label class="form-check-label" for="printCheckbox">Imprimir</label>

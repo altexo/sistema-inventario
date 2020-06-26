@@ -24,7 +24,7 @@
 </head>
 <body>
     <div id="app">
-        <div class="wrapper">
+
          @yield('navbar')
             <main class="py-4 col-md-12 mt-4 main-content" id="content" >
                 <div class="col-md-12">
@@ -50,7 +50,7 @@
                 @yield('content')
             </main>
         </div>
-    </div>
+
     <footer>
         @yield('footer')
     </footer>

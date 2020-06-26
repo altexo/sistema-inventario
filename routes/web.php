@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index')->name('home');
+Route::get('/', 'SaleController@index')->name('home');
 
 //Route::get('/users', 'UserController@index')->name('users.all');
 Route::resource('users', 'UserController')->middleware(['auth','auth.admin'])->names([

@@ -105,7 +105,8 @@ class UserController extends Controller
         }
 
         $user->save();
-        Session::flash('success', 'El usuario se actualizo con exito'); 
+        Session::put('success', 'El usuario se actualizó con exito.');
+
         return $this->edit($user);
 
     }
@@ -133,14 +134,19 @@ class UserController extends Controller
      */
     protected function createUser(array $data)
     {
-        
-        User::create([
-            'name' => $data['name'],
-            'username' => $data['username'],
-            'password' => Hash::make($data['password']),
-            'role' => $data['role'],
-        ]);
-
+        try {
+            User::create([
+                'name' => $data['name'],
+                'username' => $data['username'],
+                'password' => Hash::make($data['password']),
+                'role' => $data['role'],
+            ]);
+            Session::put('success', 'El usuario se creó con exito.');
+        } catch (\Exception $e) {
+            Session::put('error', $e->getMessage());
+        }
+      
+       
         return view('user.create')->with('success', 'El usuario se creó con exito.');
     }
 }

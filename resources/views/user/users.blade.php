@@ -1,19 +1,12 @@
 @extends('layouts.admin')
 
 @section('content')
-	<h2>Usuarios</h2>
-	<button class="btn btn-primary mb-2 ">Registrar nuevo usuario</button>
-@if(Session::has('success'))
+<div class="card col-md-12 shadow-lg">
 
-    <div class="alert alert-success alert-dismissible fade show col-md-10" role="alert">
-        {{ Session::get('success') }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    {{Session::forget('success')}}
-@endif
-	<div class="col-md-9 card p-4 shadow p-3 mb-5 bg-white rounded">
+
+	<h2 class="mt-3">Usuarios</h2>
+	<a class="btn btn-primary mb-2 col-md-2" href="{{route('users.create')}}">Registrar nuevo usuario</a>
+	<div class="col-md-12 card p-4 shadow p-3 mb-5 bg-white rounded">
 		<table class="table table-md primary">
 		  	<thead>
 		    	<tr>
@@ -47,4 +40,5 @@
 		  	</tbody>
 		</table>
 	</div>
+</div>
 @endsection
