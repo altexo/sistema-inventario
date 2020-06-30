@@ -92,12 +92,20 @@ export default {
     },
     cancelAdd(){
       // console.log('closed')
+      this.toAdd.price = null
+      this.toAdd.quantity = null
+
      this.$refs["add-product-modal"].hide();
     },
     addProduct(item){
-      axios.post('temp/sale/store', {item}).then(response => (console.log(response))).catch(err => (console.log(err)))
+      axios.post('temp/sale/store', {item}).then(response => (console.log(response), this.cleanInputs())).catch(err => (console.log(err)))
        this.$emit('addedProduct', item);
        this.$refs["add-product-modal"].hide();
+    },
+    cleanInputs(){
+           this.toAdd.price = null
+        this.toAdd.quantity = null
+        this.query = null
     }
   }
 };

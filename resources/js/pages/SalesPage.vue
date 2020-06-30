@@ -14,7 +14,7 @@
       </div>
     </div>
     <!-- Modal -->
-    <b-modal variant="bg-primary text-white" id="save-sale" hide-footer title="Terminar venta" header-class="bg-primary-dark text-white">
+    <b-modal ref="save-sale-modal"  id="save-sale" hide-footer title="Terminar venta" header-class="bg-primary-dark text-white">
       <div class="form-check mb-1">
         <input class="form-check-input" v-model="saleDetails.printSale" type="checkbox" value id="printCheckbox" checked />
         <label class="form-check-label" for="printCheckbox">Imprimir</label>
@@ -28,9 +28,13 @@
         <textarea class="form-control" v-model="saleDetails.noteSale" id="addNotetextarea" rows="3"></textarea>
       </div>
       <div class="align-items-end">
-        <b-button class variant="outline-danger">Cancelar</b-button>
+        <b-button class variant="outline-danger" @click="cancelSale">Cancelar</b-button>
         <b-button class variant="outline-primary" @click="saveSale">Guardar Venta</b-button>
       </div>
+    </b-modal>
+    <!-- Modal response -->
+    <b-modal ref="modal-response" :header-class="headerColor"  >
+      <p>{{responseMsg}}</p>
     </b-modal>
   </div>
 </template>
@@ -45,17 +49,37 @@ export default {
         printSale: true,
         invoiceSale: false,
         noteSale: null
-      }
+      },
+      responseMsg: "",
+      headerColor: "bg-sucess text-white"
     };
   },
   methods: {
     handleAddProduct(item) {
       this.componentKey += 1;
       // console.log('item from child', item)
+      this.$refs["save-sale-modal"].hide();
+    },
+    cancelSale(){
+      this.$refs["save-sale-modal"].hide();
     },
     saveSale(){
-      axios.post('sale/save', this.saleDetails).then(response => (this.handleAddProduct())).catch(err => (err))
-      console.log(this.saleDetails)
+      axios.post('sale/save', this.saleDetails).then(response => ( this.HandleResponse(response.data) ,this.handleAddProduct())).catch(err => (console.log('Error', err) ))
+      
+
+       this.$refs["save-sale-modal"].hide();
+    },
+
+    HandleResponse(response){
+      if(response.success === true){
+        this.responseMsg = "La venta  se guardó exitosamente."
+        this.headerColor = "bg-success text-white"
+      }else{
+        this.responseMsg = "La venta no pudo guardarse correctamente."
+        this.headerColor = "bg-danger text-white"
+        //Show error modal
+      }
+      this.$refs["modal-response"].show();
     }
   }
 };

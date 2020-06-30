@@ -49,4 +49,5 @@ Route::post('sale/save', 'SaleController@createSale');
 
 Route::post('temp/sale/store', 'TemporarySaleController@store');
 Route::get('temp/sale/get', 'TemporarySaleController@index');
+Route::get('temo/sale/delete/{id}', 'TemporarySaleController@destroy');
 

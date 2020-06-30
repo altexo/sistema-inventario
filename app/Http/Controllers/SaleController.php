@@ -27,6 +27,9 @@ class SaleController extends Controller
         //Validaciones y transaccion
         $tempSales = TemporarySale::all();
         $total = 0;
+        if (count($tempSales) <= 0) {
+            return  null;
+        }
         foreach($tempSales as $ts){
             $total = $total+($ts->sale_price * $ts->quantity);
         }
@@ -50,4 +53,5 @@ class SaleController extends Controller
 
 
     }
+
 }

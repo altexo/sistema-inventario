@@ -7,6 +7,17 @@ use Illuminate\Http\Request;
 
 class TemporarySaleController extends Controller
 {
+
+        /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -89,8 +100,11 @@ class TemporarySaleController extends Controller
      * @param  \App\TemporarySale  $temporarySale
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TemporarySale $temporarySale)
+    public function destroy(Int $id)
     {
-        //
+        //Falta validaciones y try catch handle error
+        $tempSale = TemporarySale::find($id);
+        $tempSale->delete();        
+        return $tempSale;
     }
 }
