@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Sale;
 use App\SalesDetails;
 use App\TemporarySale;
+use App\Product;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
