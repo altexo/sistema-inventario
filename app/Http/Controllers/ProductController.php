@@ -9,6 +9,7 @@ use App\StockEntry;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use App\Helpers\InStock;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -56,28 +57,40 @@ class ProductController extends Controller
             'product_name' => 'required|max:100|min:3',
             'type' => 'required',
             ]);
-        
-        $product = new Product;
-        $product->name = $request->product_name;
-        $product->type = $request->type;
-        $product->in_stock = 0;
-        $product->last_price = 0;
-        $product->save();
-        if(isset($request->add_to_stock)){
-            //Create new Stock Entrie
+            $product = new Product;
             $stock_entries = new StockEntry;
-            $stock_entries->product_id = $product->id;
-            $stock_entries->quantity =  $request->quantity;
-            $stock_entries->price = $request->price;
-            //Product updates
-            $product->in_stock = $product->in_stock + $request->quantity;
-            $product->last_price = $request->price;
-            //Save both
-            $stock_entries->save();
-            $product->save();
+            try {
+                DB::transaction(function () use ($product, $stock_entries, $request) { 
+                        
+                    $product->name = $request->product_name;
+                    $product->type = $request->type;
+                    $product->in_stock = 0;
+                    $product->last_price = 0;
+                    $product->save();
+                    if(isset($request->add_to_stock)){
+                        //Create new Stock Entrie
+           
+                        $stock_entries->product_id = $product->id;
+                        $stock_entries->quantity =  $request->quantity;
+                        $stock_entries->price = $request->price;
+                        //Product updates
+                        $product->in_stock = $product->in_stock + $request->quantity;
+                        $product->last_price = $request->price;
+                        //Save both
+                        $stock_entries->save();
+                        $product->save();
             
             
-        }
+                    }
+                     
+                    }, 2);
+                } catch (\Exception $e) {
+                    Session::put('error', $e->getMessage());
+                    return back();
+                }
+        //    Session::put('success', 'El Producto se registró correctamente.');
+
+   
         
 
         Session::put('success', 'El producto se guardo correctamente');
@@ -119,12 +132,19 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
+        $request->validate([
+            'name' => 'required|max:100|min:3'
+        ]);
+
         $product->name = $request->name;
-        if($product->save()){
+        try {
+            $product->save();
             Session::put('success', 'El producto se actualizó con exito.');
-            return $this->edit($product);
+        } catch (\Exception $e) {
+            Session::put('error', $e->getMessage());
         }
-        //  Session::put('success', 'Connection timeout');
+          
+        return $this->edit($product);
     }
 
     /**
@@ -136,11 +156,14 @@ class ProductController extends Controller
     public function destroy(Int $id)
     {
         $product = Product::find($id);
-        if($product->delete()){
+        try {
+            $product->delete();
             Session::put('success', 'El producto se borro con exito.');
-            return redirect('products');
+        } catch (\Exception $e) {
+            Session::put('error', $e->getMessage());
         }
-        //  Session::put('success', 'Connection timeout');
+           
+        return redirect('products');
     }
 
     public function searchProduct(Request $request){

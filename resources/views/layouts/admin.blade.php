@@ -85,7 +85,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{route('products.index')}}">  <span><img src="{{url('images/fish-solid.svg')}}" alt="products" class="svg-action-navbar"></span>
-                            Products</a>
+                            Productos</a>
                       
                     </li>
                     <li class="nav-item">
