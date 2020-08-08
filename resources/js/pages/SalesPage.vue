@@ -23,10 +23,15 @@
         <input class="form-check-input" v-model="saleDetails.invoiceSale" type="checkbox" value id="invoiceCheckbox" />
         <label class="form-check-label" for="invoiceCheckbox">Facturar</label>
       </div>
+       <div class="form-group mt-3">
+           <input type="text" class="form-control" id="clientName" v-model="salesDetails.clientName" aria-describedby="clientNameHelp" placeholder="">
+        <label for="clientName">Nombre del Cliente</label>
+      </div>
       <div class="form-group mt-3">
         <label for="addNotetextarea">Añadir Nota</label>
         <textarea class="form-control" v-model="saleDetails.noteSale" id="addNotetextarea" rows="3"></textarea>
       </div>
+     
       <div class="align-items-end">
         <b-button class variant="outline-danger" @click="cancelSale">Cancelar</b-button>
         <b-button class variant="outline-primary" @click="saveSale">Guardar Venta</b-button>
@@ -48,7 +53,8 @@ export default {
       saleDetails:{
         printSale: true,
         invoiceSale: false,
-        noteSale: null
+        noteSale: null,
+        clientName: null
       },
       responseMsg: "",
       headerColor: "bg-sucess text-white"

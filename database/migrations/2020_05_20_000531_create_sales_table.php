@@ -17,6 +17,7 @@ class CreateSalesTable extends Migration
             $table->id();
             $table->text('description')->nullable();
             $table->boolean('invoiced')->nullable($value = false);
+            $table->string('client', 191)->nullable();
             $table->double('total', 10,2);
             $table->timestamps();
             $table->softDeletes();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\TemporarySale;
+use Illuminate\Contracts\Session\Session;
 use Illuminate\Http\Request;
 
 class TemporarySaleController extends Controller
@@ -52,12 +53,18 @@ class TemporarySaleController extends Controller
     public function store(Request $request)
     {
         //Faltan validaciones 
-        $temporarySale = new TemporarySale;
-        $temporarySale->product_id = $request->item['details']['id'];
-        $temporarySale->sale_price = $request->item['toAdd']['price'];
-        $temporarySale->quantity = $request->item['toAdd']['quantity'];
-        $temporarySale->save();
-        return $temporarySale;
+        try {
+            $temporarySale = new TemporarySale;
+            $temporarySale->product_id = $request->item['details']['id'];
+            $temporarySale->sale_price = $request->item['toAdd']['price'];
+            $temporarySale->quantity = $request->item['toAdd']['quantity'];
+            $temporarySale->save();
+        } catch (\Exception $e) {
+            return response()->json(['error' => true, 'data'=>$e->getMessage()]);
+        }
+        //Hay que validar respuesta en front end
+        return response()->json(['error' => false, 'data'=> $temporarySale]);
+
     }
 
     /**
@@ -103,8 +110,13 @@ class TemporarySaleController extends Controller
     public function destroy(Int $id)
     {
         //Falta validaciones y try catch handle error
-        $tempSale = TemporarySale::find($id);
-        $tempSale->delete();        
-        return $tempSale;
+        try {
+            $tempSale = TemporarySale::find($id);
+            $tempSale->delete();   
+        } catch (\Exception $e) {
+            return response()->json(['error' => true, 'data' => $e->getMessage()]);
+        }
+         
+        return response()->json(['error'=> false, 'data'=> $tempSale]);
     }
 }

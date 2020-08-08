@@ -51,3 +51,8 @@ Route::post('temp/sale/store', 'TemporarySaleController@store');
 Route::get('temp/sale/get', 'TemporarySaleController@index');
 Route::get('temo/sale/delete/{id}', 'TemporarySaleController@destroy');
 
+Route::get('test/invoice', function(){
+
+    return view('documents.recibo-venta-capytan');
+});
+

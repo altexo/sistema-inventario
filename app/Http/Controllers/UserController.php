@@ -51,15 +51,16 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //Hacer validaciones
 
-        // return $request->validate(
-        //     [
-        //         'name' => ['required', 'string', 'max:255'],
-        //         'password' => ['required', 'string', 'min:8', 'confirmed'],
-        //         'username' => ['required', 'unique','string', 'min:5'],
-        //         'role' => ['required', 'not_in:0']
-        //     ]);
+        //Hacer validaciones
+        
+        $request->validate(
+            [
+                'name' => ['required', 'string', 'max:255'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+                'username' => ['required', 'unique','string', 'min:5'],
+                'role' => ['required', 'not_in:0']
+            ]);
         return $this->createUser($request->all());
       
     }
@@ -96,16 +97,29 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-
-        $user->name = $request->name;
-        $user->username = $request->username;
-        $user->role_id = $request->role;
-        if($request->password != null){
-            $user->password =  Hash::make($request->password);
+        $request->validate(
+            [
+                'name' => ['required', 'string', 'max:255'],
+                'password' => ['required', 'string', 'min:8', 'confirmed'],
+                'username' => ['required', 'unique','string', 'min:5'],
+                'role' => ['required', 'not_in:0']
+            ]);
+        
+        try {
+            $user->name = $request->name;
+            $user->username = $request->username;
+            $user->role_id = $request->role;
+            if($request->password != null){
+                $user->password =  Hash::make($request->password);
+            }
+    
+            $user->save();
+            Session::put('success', 'El usuario se actualizó con exito.');
+        } catch (\Exception $e) {
+            Session::put('error', $e->getMessage());
         }
-
-        $user->save();
-        Session::put('success', 'El usuario se actualizó con exito.');
+     
+      
 
         return $this->edit($user);
 
@@ -120,8 +134,12 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         if($user->delete()){
-            return redirect('users')->with('success', 'El usuario se borro con exito.');
+            Session::put('success', 'El usuario se borro con exito.');
+            
+        }else{
+            Session::put('error', 'El usuario no pude ser eliminado, porfavor vuelve a intentarlo.');
         }
+        return redirect('users');
         
     }
 
