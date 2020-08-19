@@ -158,6 +158,7 @@
 </head>
 
 <body>
+
     <div class="center main-container">
         <div class="container details-section">
             <div class="bussines-info-section row center center-text">
@@ -180,7 +181,7 @@
                             </tr>
                         <tbody>
                             <tr>
-                                <td class="center-text" style="padding: 20px">{Nombre del cliente}</td>
+                                <td class="center-text" style="padding: 20px">{{$sale->client}}</td>
                             </tr>
                         </tbody>
                         </thead>
@@ -210,9 +211,9 @@
                         </tr>
                     <tbody>
                         <tr>
-                            <td class="center-text" style="padding: 8px">30</td>
-                            <td class="center-text" style="padding: 8px">07</td>
-                            <td class="center-text" style="padding: 8px">2020</td>
+                            <td class="center-text" style="padding: 8px">{{$sale->created_at->format('d')}}</td>
+                            <td class="center-text" style="padding: 8px">{{$sale->created_at->format('m')}}</td>
+                            <td class="center-text" style="padding: 8px">{{$sale->created_at->format('y')}}</td>
                         </tr>
                     </tbody>
                     </thead>
@@ -231,46 +232,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="product-table-details">
-                        <td>{Nombre del producto}</td>
-                        <td>{Cantidad kg}</td>
-                        <td>{Precio}</td>
-                        <td>{Importe}</td>
-                    </tr>
-                    <tr class="product-table-details">
-                        <td>{Nombre del producto}</td>
-                        <td>{Cantidad kg}</td>
-                        <td>{Precio}</td>
-                        <td>{Importe}</td>
-                    </tr>
-                    <tr class="product-table-details">
-                        <td>{Nombre del producto}</td>
-                        <td>{Cantidad kg}</td>
-                        <td>{Precio}</td>
-                        <td>{Importe}</td>
-                    </tr>
-                    <tr class="product-table-details">
-                        <td>{Nombre del producto}</td>
-                        <td>{Cantidad kg}</td>
-                        <td>{Precio}</td>
-                        <td>{Importe}</td>
-                    </tr>
-                    <tr class="product-table-details">
-                        <td>{Nombre del producto}</td>
-                        <td>{Cantidad kg}</td>
-                        <td>{Precio}</td>
-                        <td>{Importe}</td>
-                    </tr>
-                    <tr class="product-table-details">
-                        <td>{Nombre del producto}</td>
-                        <td>{Cantidad kg}</td>
-                        <td>{Precio}</td>
-                        <td>{Importe}</td>
-                    </tr>
+                    @forelse ($sale_details as $sale_detail)
+                        <tr class="product-table-details">
+                            <td>{{$sale_detail->name}}</td>
+                            <td>{{$sale_detail->quantity}}</td>
+                            <td>{{$sale_detail->sale_price}}</td>
+                            <td>@convert($sale_detail->sale_price * $sale_detail->quantity)</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="4">No hay productos en esta venta</td>
+                        </tr>        
+                        @endforelse
                     <tr class="product-table-details">
                         <td colspan="2" style="border:none"></td>
                         <td class="th-color-gray">Total</td>
-                        <td></td>
+                        <td>@convert($sale->total)</td>
                     </tr>
                 </tbody>
             </table>
@@ -285,10 +262,9 @@
             </div>
             <div class="center footer-block">
                 <div class="notes-container ">
-                    <p>Hello alkdhkjhdskj hajkh kjahd kjhskldh lk jshdkj djk hskjd
-                        ksdkjdskjhksjdh kjsdkjsdkj hskjdhkjsd kjsdkhdskj</p>
+                    <p>{{$sale->description}}</p>
                 </div>
-                <h4 class="center-text" style="    margin-top: 9px;">NOTAS</h4>
+                <h4 class="center-text" style="margin-top: 9px;">NOTAS</h4>
             </div>
         </div>
     </div>

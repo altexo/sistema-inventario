@@ -10,12 +10,18 @@ class Sale extends Model
 
     protected $table = 'sales';
 
-      public function products(){
-     	return $this->belongsToMany('App\Products')
-     			->using('App\SalesDetails')
-     			 ->withPivot([
-                            'created_by',
-                            'updated_by',
-                        ]);
+    //   public function products(){
+    //  	return $this->belongsToMany('App\Product')
+    //  			->using('App\SalesDetails')
+    //  			 ->withPivot([
+    //                         'created_by',
+    //                         'updated_by',
+    //                     ]);
+    //  }
+     public function products(){
+       return $this->belongsToMany('App\Product', 'sales_details')->withPivot('quantity', 'sale_price')
+       ->withTimestamps();;
      }
+   
+
 }

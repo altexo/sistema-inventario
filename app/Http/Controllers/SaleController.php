@@ -28,6 +28,7 @@ class SaleController extends Controller
 
     public function createSale(Request $request){
         $success = false;
+        $msg = "";
         //Validaciones y transaccion
         $request->validate([
             'noteSale' => 'max:300|min:3',
@@ -53,7 +54,7 @@ class SaleController extends Controller
         
                 foreach ($tempSales as $ts) {
                     $saleDetails = new SalesDetails;
-                    $product = new Product;
+                    $product = Product::find($ts->product_id);
                     $product->in_stock = $product->in_stock - $ts->quantity;
                     $saleDetails->product_id = $ts->product_id;
                     $saleDetails->sale_id = $sale->id;
@@ -65,16 +66,30 @@ class SaleController extends Controller
                 }        
                  
                 }, 2);
-                Session::put('success', 'La venta registró correctamente');
+               
                 $success = true;
             } catch (\Exception $e) {
-                Session::put('error', $e->getMessage());
+                $msg = $e->getMessage();
             }
        
 
-        return response()->json(['success'=>$success]);
+        return response()->json(['success'=>$success, 'message' => $msg]);
 
 
+    }
+
+    public function printSale(){
+        $last_sale = Sale::latest()->first();
+       // return $last_sale->created_at->format('m');
+        //Hay que utilizar ->withTrashed() al reimprimir recibo y generar reportes
+        $sale_details = SalesDetails::join('products', 'sales_details.product_id', '=', 'products.id')->where('sale_id', $last_sale->id)->get();
+
+        return view('documents.recibo-venta-capytan', ['sale' => $last_sale, 'sale_details'=> $sale_details]);
+    }
+
+    public function showHistory(){
+        $sales = Sale::with('products')->get();
+        return view('sales.history', ['sales' => $sales]);
     }
 
 }

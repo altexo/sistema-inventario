@@ -24,7 +24,7 @@
         <label class="form-check-label" for="invoiceCheckbox">Facturar</label>
       </div>
        <div class="form-group mt-3">
-           <input type="text" class="form-control" id="clientName" v-model="salesDetails.clientName" aria-describedby="clientNameHelp" placeholder="">
+           <input type="text" class="form-control" id="clientName" v-model="saleDetails.clientName" aria-describedby="clientNameHelp" placeholder="">
         <label for="clientName">Nombre del Cliente</label>
       </div>
       <div class="form-group mt-3">
@@ -68,24 +68,31 @@ export default {
     },
     cancelSale(){
       this.$refs["save-sale-modal"].hide();
+      window.open("print/invoice", "_blank");  
     },
     saveSale(){
-      axios.post('sale/save', this.saleDetails).then(response => ( this.HandleResponse(response.data) ,this.handleAddProduct())).catch(err => (console.log('Error', err) ))
+      axios.post('sale/save', this.saleDetails).then(response => (console.log(response), this.HandleResponse(response.data) ,this.handleAddProduct())).catch(err => (console.log('Error', err) ))
       
 
        this.$refs["save-sale-modal"].hide();
+       
     },
 
     HandleResponse(response){
       if(response.success === true){
         this.responseMsg = "La venta  se guardó exitosamente."
         this.headerColor = "bg-success text-white"
+       
       }else{
         this.responseMsg = "La venta no pudo guardarse correctamente."
         this.headerColor = "bg-danger text-white"
         //Show error modal
       }
       this.$refs["modal-response"].show();
+      this.printInvoice()
+    },
+    printInvoice(){
+      window.open("print/invoice", "_blank");  
     }
   }
 };

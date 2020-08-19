@@ -29,6 +29,7 @@ Vue.component('sales-page', require('./pages/SalesPage.vue').default);
 Vue.component('sale-grid-component', require('./components/SaleGridComponent.vue').default)
 Vue.component('search-bar-component', require('./components/SearchbarComponent.vue').default)
 Vue.component('modal', require('./components/ModalComponent').default)
+Vue.component('date-picker', require('./components/DatepickerComponent.vue').default)
 
 
 /**

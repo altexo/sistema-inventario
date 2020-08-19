@@ -13,15 +13,18 @@ class Product extends Model implements Searchable
 
      protected $table = 'products';
 
-     public function sales(){
-     	return $this->belongsToMany('App\Sales')
-     			->using('App\SalesDetails')
-     			->withPivot([
-                            'created_by',
-                            'updated_by',
-                        ]);
-     }
+   //   public function sales(){
+   //   	return $this->belongsToMany('App\Sales')
+   //   			->using('App\SalesDetails')
+   //   			->withPivot([
+   //                          'created_by',
+   //                          'updated_by',
+   //                      ]);
+   //   }
 
+   public function sales(){
+      return $this->belongsToMany('App\Sale', 'sales_details');
+    }
      public function getSearchResult(): SearchResult
      {
      //    $url = route('sales.sale', $this->id);

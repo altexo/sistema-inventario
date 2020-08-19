@@ -98,7 +98,7 @@
 
                     </li>
                     <li class="nav-item">
-                      <a class="nav-link" href="#">
+                        <a class="nav-link" href="{{route('sales.history')}}">
                         <span><img src="{{url('images/file-invoice-dollar-solid.svg')}}" alt="Volcer" class="svg-action-navbar"></span>
                         Reportes
                       </a>

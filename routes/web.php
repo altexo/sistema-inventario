@@ -46,10 +46,13 @@ Route::resource('stock', 'StockEntryController')->names([
 
 Route::get('sale', 'SaleController@index')->name('sales.sale');
 Route::post('sale/save', 'SaleController@createSale');
+Route::get('print/invoice','SaleController@printSale');
 
 Route::post('temp/sale/store', 'TemporarySaleController@store');
 Route::get('temp/sale/get', 'TemporarySaleController@index');
-Route::get('temo/sale/delete/{id}', 'TemporarySaleController@destroy');
+Route::get('temp/sale/delete/{id}', 'TemporarySaleController@destroy');
+Route::get('sale/history', 'SaleController@showHistory')->name('sales.history');
+
 
 Route::get('test/invoice', function(){
 
