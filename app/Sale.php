@@ -23,5 +23,7 @@ class Sale extends Model
        ->withTimestamps();;
      }
    
-
+     public function saleDetails(){
+       return $this->hasMany('App\SalesDetails');
+     }
 }

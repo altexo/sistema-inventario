@@ -9,9 +9,14 @@ use App\Product;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Symfony\Component\Console\Input\Input;
+use App\Exports\SalesExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SaleController extends Controller
 {
+
+    public $productsExport;
     /**
      * Create a new controller instance.
      *
@@ -88,8 +93,55 @@ class SaleController extends Controller
     }
 
     public function showHistory(){
-        $sales = Sale::with('products')->get();
+        //return request()->all();
+        //return $sales = DB::select('select DATE(created_at) from sales');
+        if(request()->has('fromDate') || request()->has('toDate')):
+            $fromDate = request('fromDate');
+            $toDate = request('toDate');
+            if(($fromDate != '') && ($toDate != '') ):
+                $sales = Sale::with('products')->whereBetween(DB::raw('DATE(sales.created_at)'), array(request('fromDate'), request('toDate')))->paginate(15);
+                $sales->appends(request()->input())->links();
+            elseif($fromDate != ''):     
+                $sales = Sale::with('products')->whereDate(DB::raw('DATE(sales.created_at)'), '>=', $fromDate)->paginate(15);
+                $sales->appends(request()->input())->links();
+            elseif($toDate != ''):
+                $sales = Sale::with('products')->whereDate(DB::raw('DATE(sales.created_at)'), '<=', $toDate)->paginate(15);
+                $sales->appends(request()->input())->links();
+            endif;     
+        else:
+            $sales = Sale::with('products')->paginate(15);
+        endif;
         return view('sales.history', ['sales' => $sales]);
+    }
+
+    public function deleteSale(){
+        $sale = Sale::where('sales.id', request('id'))->first();
+        try{
+            DB::transaction(function () use ($sale) {
+                foreach($sale->saleDetails as $sale_detail){
+                    $product = Product::find($sale_detail->product_id);
+                    $product->in_stock = ($product->in_stock + $sale_detail->quantity);
+                    $product->save();
+                    $sale_detail->delete();
+                }
+                $sale->delete();
+            });
+            Session::put('success', 'La venta se canceló correctamente');
+        }catch(\Exception $e){
+            Session::put('error', $e->getMessage());
+            return back(); 
+        }
+        return $this->showHistory();
+    }
+
+    public function export(){
+        if(request()->has('fromDate') || request()->has('toDate')):
+            $fromDate = request('fromDate');
+            $toDate = request('toDate');
+            return Excel::download(new SalesExport($fromDate, $toDate), 'ventas.xlsx');
+        else:
+            return Excel::download(new SalesExport, 'ventas.xlsx');
+        endif;
     }
 
 }

@@ -52,6 +52,8 @@ Route::post('temp/sale/store', 'TemporarySaleController@store');
 Route::get('temp/sale/get', 'TemporarySaleController@index');
 Route::get('temp/sale/delete/{id}', 'TemporarySaleController@destroy');
 Route::get('sale/history', 'SaleController@showHistory')->name('sales.history');
+Route::get('sale/delete', 'SaleController@deleteSale')->name('sales.delete');
+Route::get('sale/export', 'SaleController@export');
 
 
 Route::get('test/invoice', function(){
