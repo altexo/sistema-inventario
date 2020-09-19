@@ -86,7 +86,7 @@
            let fromDate = document.querySelector('input[name=fromDate]').value
            let toDate = document.querySelector('input[name=toDate]').value
            if(toDate !== '' || fromDate !== ''){
-                
+                 
            }
            
         }

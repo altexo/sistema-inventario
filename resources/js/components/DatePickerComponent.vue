@@ -1,5 +1,16 @@
 <template>
-  <Datepicker :language="es" :name="name" :format="customFormatter" :bootstrap-styling="true" input-class="col-md-11" :value="value"></Datepicker>
+  <Datepicker 
+    :language="es" 
+    :name="name" 
+    :format="customFormatter" 
+    :bootstrap-styling="true" 
+    :value="value" 
+    :input-class="inputClass"
+    :id="id"
+    :clear-button="true"
+    :calendar-button="true"
+    ></Datepicker>
+    
 </template>
 
 <script>
@@ -15,7 +26,15 @@ export default {
     value: {
       type: String, 
       default: ''
-      }
+      },
+    id:{
+      type: String,
+      default: ''
+    },
+    inputClass:{
+      type: String,
+      default: ''
+    }
   },
   methods: {
     customFormatter(date) {

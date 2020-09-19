@@ -71,7 +71,7 @@ export default {
       window.open("print/invoice", "_blank");  
     },
     saveSale(){
-      axios.post('sale/save', this.saleDetails).then(response => (console.log(response), this.HandleResponse(response.data) ,this.handleAddProduct())).catch(err => (console.log('Error', err) ))
+      axios.post('save', this.saleDetails).then(response => (console.log(response), this.HandleResponse(response.data) ,this.handleAddProduct())).catch(err => (console.log('Error', err) ))
       
 
        this.$refs["save-sale-modal"].hide();

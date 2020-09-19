@@ -140,7 +140,7 @@ class SaleController extends Controller
             $toDate = request('toDate');
             return Excel::download(new SalesExport($fromDate, $toDate), 'ventas.xlsx');
         else:
-            return Excel::download(new SalesExport, 'ventas.xlsx');
+            return Excel::download(new SalesExport, 'ventas.xls');
         endif;
     }
 

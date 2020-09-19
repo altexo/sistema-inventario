@@ -1966,6 +1966,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -1976,6 +1987,14 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     name: String,
     value: {
+      type: String,
+      "default": ''
+    },
+    id: {
+      type: String,
+      "default": ''
+    },
+    inputClass: {
       type: String,
       "default": ''
     }
@@ -2367,7 +2386,7 @@ __webpack_require__.r(__webpack_exports__);
     saveSale: function saveSale() {
       var _this = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('sale/save', this.saleDetails).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('save', this.saleDetails).then(function (response) {
         return console.log(response), _this.HandleResponse(response.data), _this.handleAddProduct();
       })["catch"](function (err) {
         return console.log('Error', err);
@@ -70335,8 +70354,11 @@ var render = function() {
       name: _vm.name,
       format: _vm.customFormatter,
       "bootstrap-styling": true,
-      "input-class": "col-md-11",
-      value: _vm.value
+      value: _vm.value,
+      "input-class": _vm.inputClass,
+      id: _vm.id,
+      "clear-button": true,
+      "calendar-button": true
     }
   })
 }

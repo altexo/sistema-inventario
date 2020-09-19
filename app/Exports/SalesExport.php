@@ -13,6 +13,7 @@ class SalesExport implements FromCollection, WithHeadings
 
     public $fromDate;
     public $toDate;
+    public $lineBrake;
     public function __construct($fromDate = '', $toDate = '')
     {
         $this->fromDate = $fromDate;
@@ -31,7 +32,7 @@ class SalesExport implements FromCollection, WithHeadings
             elseif($this->toDate != ''):
                 $sales = Sale::with('products')->whereDate(DB::raw('DATE(sales.created_at)'), '<=', $this->toDate)->get();
             else:
-                $sales = Sale::with('products')->get;
+                $sales = Sale::with('products')->get();
             endif;     
        
 
@@ -45,8 +46,10 @@ class SalesExport implements FromCollection, WithHeadings
        
         foreach($sales as $sale){
            $this->productsExport = '';
+
+           if (count($sale->products) > 1) : $this->lineBrake = "\r\n"; else: $this->lineBrake = ""; endif; 
             foreach($sale->products as $product){
-                $this->productsExport = $product->name . ' ' . $product->pivot->quantity . ' ' . $product->type . ' | precio/unitario ' . $product->pivot->sale_price . '\n'; 
+                $this->productsExport .= $product->name . ' ' . $product->pivot->quantity . ' ' . $product->type . ' | precio/unitario ' . $product->pivot->sale_price . $this->lineBrake; 
             }
             $facturado = 'No';
             if ($sale->invoiced == 1){ 
