@@ -6,19 +6,42 @@ use App\Sale;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Events\AfterSheet;
 use Illuminate\Support\Facades\DB;
 
-class SalesExport implements FromCollection, WithHeadings
+class SalesExport implements FromCollection, WithHeadings, ShouldAutoSize, WithEvents
 {
 
     public $fromDate;
     public $toDate;
+    public $facturado;
     public $lineBrake;
-    public function __construct($fromDate = '', $toDate = '')
+    public function __construct($fromDate = '', $toDate = '', $facturado = '')
     {
         $this->fromDate = $fromDate;
         $this->toDate = $toDate;
+        $this->facturado = $facturado;
     }
+
+    /**
+     * @return array
+     */
+    public function registerEvents(): array
+    {
+        return [
+            AfterSheet::class    => function(AfterSheet $event) {
+                $cellRange = 'A1:F1'; // All headers
+                $event->sheet->getDelegate()->getStyle($cellRange)->getFont()->setSize(14);
+                $event->sheet->getDelegate()->getStyle($cellRange)->getFill()
+                ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+                ->getStartColor()->setARGB('808080');
+                // $event->sheet->getDelegate()->getCell('F9')->getCalculatedValue();
+            },
+        ];
+    }
+
     /**
     * @return \Illuminate\Support\Collection
     */
@@ -34,7 +57,10 @@ class SalesExport implements FromCollection, WithHeadings
             else:
                 $sales = Sale::with('products')->get();
             endif;     
-       
+            
+        if ($this->facturado !== ''){
+            $sales->where('invoiced', $this->facturado);
+        }
 
         return $this->generateSalesCollection($sales);
 

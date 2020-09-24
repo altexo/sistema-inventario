@@ -95,7 +95,7 @@ class SaleController extends Controller
     public function showHistory(){
         //return request()->all();
         //return $sales = DB::select('select DATE(created_at) from sales');
-        if(request()->has('fromDate') || request()->has('toDate')):
+        if((request()->has('fromDate') && request('fromDate') != '') || (request()->has('toDate') && request('toDate') != '')):
             $fromDate = request('fromDate');
             $toDate = request('toDate');
             if(($fromDate != '') && ($toDate != '') ):
@@ -111,6 +111,10 @@ class SaleController extends Controller
         else:
             $sales = Sale::with('products')->paginate(15);
         endif;
+        //return $sales;
+        if (request()->has('facturado') && request('facturado') != ''){
+            $sales = $sales->where('invoiced', request('facturado'))->paginate(15);
+        }
         return view('sales.history', ['sales' => $sales]);
     }
 
@@ -138,8 +142,10 @@ class SaleController extends Controller
         if(request()->has('fromDate') || request()->has('toDate')):
             $fromDate = request('fromDate');
             $toDate = request('toDate');
+
             return Excel::download(new SalesExport($fromDate, $toDate), 'ventas.xlsx');
         else:
+
             return Excel::download(new SalesExport, 'ventas.xls');
         endif;
     }

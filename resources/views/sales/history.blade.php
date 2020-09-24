@@ -16,23 +16,34 @@
       <form method="GET" action="{{ route('sales.history') }}" class="col-md-12 row" id="filter-form">
         <li class="nav-item col-md-3 pt-4">
            
-                <div class="form-group row ">
-                    <label class="col-md-4 text-white">Desde </label>
-                <date-picker name="fromDate" class="col-md-8" value="{{request('fromDate')}}"></date-picker>
+                <div class="form-group  ">
+                    <label class="text-white">Desde </label>
+                <date-picker name="fromDate" class="col-md-10" value="{{request('fromDate')}}"></date-picker>
                     {{-- <img src="{{ url('images/calendar.svg') }}" alt="Edit"
                         class="svg-action-icon-button col-md-3"> --}}
                 </div>
 
         </li>
         <li class="nav-item col-md-3 pt-4">
-            <div class="form-group row">
-                <label class="col-md-4 text-white">Hasta</label>
-                <date-picker name="toDate" class="col-md-8" value="{{request('toDate')}}"></date-picker>
+            <div class="form-group ">
+                <label class="text-white">Hasta</label>
+                <date-picker name="toDate" class="col-md-10" value="{{request('toDate')}}"></date-picker>
             </div>
 
         </li>
         <li class="nav-item col-md-3 pt-4">
-            <button type="submit" class="btn btn-sm btn-primary">Aplicar rango de fechas</button>
+            <div class="form-group">
+                <label for="selectFacturado" class="text-white">Facturadas</label>
+                <select class="form-control" id="selectFacturado" name="facturado">
+                  <option selected value="">Todos</option>
+                  <option value="1">Facturado</option>
+                  <option value="0">Sin facturar</option>
+                </select>
+              </div>
+
+        </li>
+        <li class="nav-item col-md-2 pt-4 d-flex flex-column">
+            <button type="submit" class="btn btn-sm btn-primary mt-auto mb-4">Aplicar filtros</button>
         </li>
         
         </form>
@@ -85,9 +96,12 @@
         const exportSales = () => {
            let fromDate = document.querySelector('input[name=fromDate]').value
            let toDate = document.querySelector('input[name=toDate]').value
-           if(toDate !== '' || fromDate !== ''){
-                 
-           }
+           let facturado = document.querySelector('select[name=facturado]').value
+           console.log('fd: ' + fromDate + 'td: ' + toDate + 'in: ' + facturado)
+           let base_path = "{{url('/')}}";
+         
+           window.open(base_path+'/sale/export?fromDate='+fromDate+'&toDate='+toDate+'&facturado='+facturado);
+          
            
         }
     </script>

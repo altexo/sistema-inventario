@@ -103,12 +103,12 @@
                         Historial de ventas
                       </a>
                     </li>
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                       <a class="nav-link" href="{{route('report.view')}}">
                       <span><img src="{{url('images/file-invoice-dollar-solid.svg')}}" alt="Volcer" class="svg-action-navbar"></span>
                       Reportes
                     </a>
-                  </li>
+                  </li> --}}
               
                   </ul>
       
