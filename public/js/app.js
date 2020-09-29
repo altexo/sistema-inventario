@@ -1977,6 +1977,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -70352,7 +70353,8 @@ var render = function() {
     attrs: {
       language: _vm.es,
       name: _vm.name,
-      format: _vm.customFormatter,
+      "use-utc": true,
+      format: "yyyy-MM-dd",
       "bootstrap-styling": true,
       value: _vm.value,
       "input-class": _vm.inputClass,

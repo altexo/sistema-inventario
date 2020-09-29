@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use Symfony\Component\Console\Input\Input;
 use App\Exports\SalesExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 
 class SaleController extends Controller
 {
@@ -85,7 +87,6 @@ class SaleController extends Controller
 
     public function printSale(){
         $last_sale = Sale::latest()->first();
-       // return $last_sale->created_at->format('m');
         //Hay que utilizar ->withTrashed() al reimprimir recibo y generar reportes
         $sale_details = SalesDetails::join('products', 'sales_details.product_id', '=', 'products.id')->where('sale_id', $last_sale->id)->get();
 
@@ -99,22 +100,50 @@ class SaleController extends Controller
             $fromDate = request('fromDate');
             $toDate = request('toDate');
             if(($fromDate != '') && ($toDate != '') ):
-                $sales = Sale::with('products')->whereBetween(DB::raw('DATE(sales.created_at)'), array(request('fromDate'), request('toDate')))->paginate(15);
+                if (request()->has('facturado') && request('facturado') != ''){
+                    $sales = Sale::with('products')->whereBetween(DB::raw('DATE(sales.created_at)'), array(request('fromDate'), request('toDate')))->where('invoiced', request('facturado'))->paginate(15);
+                }else{
+                    $sales = Sale::with('products')->whereBetween(DB::raw('DATE(sales.created_at)'), array(request('fromDate'), request('toDate')))->paginate(15);
+                }
+               
                 $sales->appends(request()->input())->links();
+               
             elseif($fromDate != ''):     
-                $sales = Sale::with('products')->whereDate(DB::raw('DATE(sales.created_at)'), '>=', $fromDate)->paginate(15);
+                if (request()->has('facturado') && request('facturado') != ''){
+                    $sales = Sale::with('products')->whereDate(DB::raw('DATE(sales.created_at)'), '>=', $fromDate)->where('invoiced', request('facturado'))->paginate(15);
+                }
+                else{
+                    $sales = Sale::with('products')->whereDate(DB::raw('DATE(sales.created_at)'), '>=', $fromDate)->paginate(15);
+                }
                 $sales->appends(request()->input())->links();
             elseif($toDate != ''):
-                $sales = Sale::with('products')->whereDate(DB::raw('DATE(sales.created_at)'), '<=', $toDate)->paginate(15);
+                if (request()->has('facturado') && request('facturado') != ''){
+                    $sales = Sale::with('products')->whereDate(DB::raw('DATE(sales.created_at)'), '<=', $toDate)->where('invoiced', request('facturado'))->paginate(15);
+                }
+                else{
+                    $sales = Sale::with('products')->whereDate(DB::raw('DATE(sales.created_at)'), '<=', $toDate)->paginate(15);
+                }
                 $sales->appends(request()->input())->links();
             endif;     
         else:
-            $sales = Sale::with('products')->paginate(15);
+            if (request()->has('facturado') && request('facturado') != ''){
+                $sales = Sale::with('products')->where('invoiced', request('facturado'))->paginate(15);
+                $sales->appends(request()->input())->links();
+            }else{
+                $sales = Sale::with('products')->paginate(15);
+            }
+
+            
         endif;
         //return $sales;
         if (request()->has('facturado') && request('facturado') != ''){
-            $sales = $sales->where('invoiced', request('facturado'))->paginate(15);
+           
+
+            // $sales = $this->manuallyPaginate($sales->where('invoiced', request('facturado')));//->appends('search', request('search'));;
+            // $sales->appends(request()->query())->links(); 
+           
         }
+
         return view('sales.history', ['sales' => $sales]);
     }
 
@@ -149,6 +178,21 @@ class SaleController extends Controller
             return Excel::download(new SalesExport, 'ventas.xls');
         endif;
     }
+
+    private function manuallyPaginate($products)
+    {
+        $perPage = 1;
+        $pageStart = request('page', 1);
+        $offSet    = ($pageStart * $perPage) - $perPage;
+        $productsForCurrentPage = $products->slice($offSet, $perPage);
+
+        return new LengthAwarePaginator(
+            $productsForCurrentPage, $products->count(), $perPage,
+            Paginator::resolveCurrentPage(),
+            ['path' => Paginator::resolveCurrentPath()]
+        );
+    }
+  
 
 }
 

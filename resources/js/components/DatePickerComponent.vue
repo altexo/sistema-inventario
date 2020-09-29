@@ -2,7 +2,8 @@
   <Datepicker 
     :language="es" 
     :name="name" 
-    :format="customFormatter" 
+    :use-utc="true"
+    format="yyyy-MM-dd" 
     :bootstrap-styling="true" 
     :value="value" 
     :input-class="inputClass"

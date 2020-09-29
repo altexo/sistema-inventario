@@ -18,7 +18,7 @@
            
                 <div class="form-group  ">
                     <label class="text-white">Desde </label>
-                <date-picker name="fromDate" class="col-md-10" value="{{request('fromDate')}}"></date-picker>
+                <date-picker name="fromDate" class="col-md-12" value="{{request('fromDate')}}"></date-picker>
                     {{-- <img src="{{ url('images/calendar.svg') }}" alt="Edit"
                         class="svg-action-icon-button col-md-3"> --}}
                 </div>
@@ -27,7 +27,7 @@
         <li class="nav-item col-md-3 pt-4">
             <div class="form-group ">
                 <label class="text-white">Hasta</label>
-                <date-picker name="toDate" class="col-md-10" value="{{request('toDate')}}"></date-picker>
+                <date-picker name="toDate" class="col-md-12" value="{{request('toDate')}}"></date-picker>
             </div>
 
         </li>
@@ -35,9 +35,9 @@
             <div class="form-group">
                 <label for="selectFacturado" class="text-white">Facturadas</label>
                 <select class="form-control" id="selectFacturado" name="facturado">
-                  <option selected value="">Todos</option>
-                  <option value="1">Facturado</option>
-                  <option value="0">Sin facturar</option>
+                  <option {{ Request()->facturado == '' ? ' selected' : '' }} value="">Todos</option>
+                  <option {{ Request()->facturado == '1' ? ' selected' : '' }} value="1">Facturado</option>
+                  <option {{ Request()->facturado == '0' ? ' selected' : '' }} value="0">Sin facturar</option>
                 </select>
               </div>
 
