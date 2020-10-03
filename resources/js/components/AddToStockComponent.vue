@@ -9,7 +9,7 @@
                     <label for="inputQty">Cantidad</label>
                     <div class="input-group col-md-6 mb-4">
                        
-                        <input type="number" class="form-control" name="quantity" id="inputQty" placeholder="e.g. 1000">
+                        <input type="number" class="form-control" name="quantity" id="inputQty" min="0"  step=".01" placeholder="e.g. 1000">
                         <div class="input-group-append">
                             <span class="input-group-text" id="quantity">KG</span>
                         </div>
@@ -38,6 +38,7 @@ export default {
         
     
     }
+//Escribir metodo de volver campos requeridos si show es === true
 }
 </script>
 

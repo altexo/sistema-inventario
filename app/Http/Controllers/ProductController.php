@@ -55,7 +55,7 @@ class ProductController extends Controller
     {
         $request->validate([
             'product_name' => 'required|max:100|min:3',
-            'type' => 'required',
+            //'type' => 'required',
             ]);
             $product = new Product;
             $stock_entries = new StockEntry;
@@ -63,7 +63,7 @@ class ProductController extends Controller
                 DB::transaction(function () use ($product, $stock_entries, $request) { 
                         
                     $product->name = $request->product_name;
-                    $product->type = $request->type;
+                    //$product->type = $request->type;
                     $product->in_stock = 0;
                     $product->last_price = 0;
                     $product->save();

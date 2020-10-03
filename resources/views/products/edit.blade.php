@@ -10,6 +10,9 @@
             @csrf
             {{ method_field('PATCH') }}
             <div class="form-group">
+                @if($errors->has('name'))
+                    <div class="error">{{ $errors->first('name') }}</div>
+                @endif
                 <label for="inputName">Nombre del Producto</label>
                 <input type="text" name="name" class="form-control" id="inputName" value="{{$product->name}}"  placeholder="">
             </div>

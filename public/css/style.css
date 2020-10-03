@@ -356,3 +356,6 @@ ul ul a {
 .max-height{
     height: 100vh;
 }
+.error{
+    color: red;
+}

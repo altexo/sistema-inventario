@@ -53,14 +53,19 @@ class UserController extends Controller
     {
 
         //Hacer validaciones
-        
-        $request->validate(
-            [
-                'name' => ['required', 'string', 'max:255'],
-                'password' => ['required', 'string', 'min:8', 'confirmed'],
-                'username' => ['required', 'unique','string', 'min:5'],
-                'role' => ['required', 'not_in:0']
-            ]);
+
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'string', 'max:255'],
+            'password' => ['required', 'string', 'min:8'],
+            'username' => ['required', 'unique:users','string', 'min:5'],
+            'role' => ['required', 'not_in:0']
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('users/create')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
         return $this->createUser($request->all());
       
     }
@@ -100,8 +105,8 @@ class UserController extends Controller
         $request->validate(
             [
                 'name' => ['required', 'string', 'max:255'],
-                'password' => ['required', 'string', 'min:8', 'confirmed'],
-                'username' => ['required', 'unique','string', 'min:5'],
+                'password' => ['required', 'string', 'min:8'],
+                'username' => ['required','string', 'min:5'],
                 'role' => ['required', 'not_in:0']
             ]);
         
