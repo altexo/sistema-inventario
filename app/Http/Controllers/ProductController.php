@@ -28,9 +28,22 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::paginate(15);
+        if(!$request->input('query')){
+            $products = Product::paginate(15);
+        }
+        else
+        {
+            $products = Product::query()
+                ->where('name', 'LIKE', "%{$request->input('query')}%") 
+                ->Where('in_stock', '>', 0) 
+                ->paginate(15);
+            
+            $products->appends(request()->input())->links();
+        }
+
+       
         //  Session::put('success', 'Connection timeout');
         return view('products.products', ['products'=>$products]);
     }
@@ -170,10 +183,23 @@ class ProductController extends Controller
         if(!$request->input('query')){
             return null;
         }
-        $results = (new Search())
-        ->registerModel(Product::class, 'name')
-        ->search($request->input('query'));
+        $results = Product::query()
+            ->where('name', 'LIKE', "%{$request->input('query')}%") 
+            ->Where('in_stock', '>', 0) 
+            ->get();
         
         return response()->json($results);
     }    
+
+    // public function productsSearchStatic(Request $request){
+    //     if(!$request->input('query')){
+    //         return null;
+    //     }
+    //     $products = Product::query()
+    //         ->where('name', 'LIKE', "%{$request->input('query')}%") 
+    //         ->Where('in_stock', '>', 0) 
+    //         ->paginate(15);
+
+    //     return view('products.products', ['products'=>$products]);
+    // }
 }

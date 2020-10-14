@@ -20,14 +20,14 @@
       </div>
       <ul class="list-group" v-if="results.length > 0 && query">
         <li v-for="result in results.slice(0,10)" :key="result.id" class="list-group-item">
-          <div v-text="result.title" @click="showModal(result)"></div>
+          <div v-text="result.name" @click="showModal(result)"></div>
         </li>
       </ul>
     </div>
 
     <!-- Modal -->
-    <b-modal   ref="add-product-modal" header-class="bg-primary-dark text-white" id="modal-1" hide-footer :title="item.title">
-      <p class="text-black">Disponible en inventario: <span>{{item.searchable.in_stock}}</span></p>
+    <b-modal   ref="add-product-modal" header-class="bg-primary-dark text-white" id="modal-1" hide-footer :title="item.name">
+      <p class="text-black">Disponible en inventario: <span>{{item.in_stock}}</span></p>
       <div class="form-group">
         <label for="priceInput">Precio de venta</label>
         <input
@@ -50,7 +50,7 @@
       </div>
       <div class="align-items-end">
         <b-button class="" variant="outline-danger"  @click="cancelAdd">Cancelar</b-button>
-      <b-button class="" variant="outline-primary"  @click="addProduct({toAdd: toAdd, details: item.searchable})">Añadir</b-button>
+      <b-button class="" variant="outline-primary"  @click="addProduct({toAdd: toAdd, details: item})">Añadir</b-button>
 
       </div>
     </b-modal>
@@ -64,7 +64,7 @@ export default {
   data() {
     return {
       query: null,
-      item: { title: null, url: null, searchable: Object },
+      item: { name: null, quantity: null, searchable: Object },
       results: [],
        toAdd:{price: null, quantity: null},
     };
@@ -77,7 +77,7 @@ export default {
   methods: {
     searchMembers() {
       axios
-        .get("products/search", { params: { query: this.query } })
+        .get("sale/products/search", { params: { query: this.query } })
         .then(
           response => (
             (this.results = response.data),
@@ -98,7 +98,7 @@ export default {
      this.$refs["add-product-modal"].hide();
     },
     addProduct(item){
-      axios.post('temp/sale/store', {item}).then(response => (console.log(response), this.cleanInputs())).catch(err => (console.log(err)))
+      axios.post('sale/temp/sale/store', {item}).then(response => (console.log(response), this.cleanInputs())).catch(err => (console.log(err)))
        this.$emit('addedProduct', item);
        this.$refs["add-product-modal"].hide();
     },

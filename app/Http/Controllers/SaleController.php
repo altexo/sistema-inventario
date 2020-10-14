@@ -38,7 +38,6 @@ class SaleController extends Controller
         $msg = "";
         //Validaciones y transaccion
         $request->validate([
-            'noteSale' => 'max:300|min:3',
             'invoiceSale' => 'required',
         ]);
         $tempSales = TemporarySale::all();

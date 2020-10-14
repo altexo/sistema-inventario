@@ -1943,7 +1943,11 @@ __webpack_require__.r(__webpack_exports__);
       show: false
     };
   },
-  mounted: function mounted() {}
+  mounted: function mounted() {},
+  methods: {
+    addRequireToInput: function addRequireToInput() {}
+  } //Escribir metodo de volver campos requeridos si show es === true
+
 });
 
 /***/ }),
@@ -2142,7 +2146,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       //Faltan validaciones y handle error
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('temo/sale/delete/' + id).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('sale/temp/sale/delete/' + id).then(function (response) {
         return (//  this.$delete(this.products, index)
           _this.getTempSale()
         );
@@ -2153,7 +2157,7 @@ __webpack_require__.r(__webpack_exports__);
     getTempSale: function getTempSale() {
       var _this2 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('temp/sale/get').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('sale/temp/sale/get').then(function (response) {
         return console.log(response.data), _this2.products = response.data.in_sale, _this2.total = response.data.total;
       })["catch"](function (err) {
         return console.log(err);
@@ -2241,8 +2245,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       query: null,
       item: {
-        title: null,
-        url: null,
+        name: null,
+        quantity: null,
         searchable: Object
       },
       results: [],
@@ -2261,7 +2265,7 @@ __webpack_require__.r(__webpack_exports__);
     searchMembers: function searchMembers() {
       var _this = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("products/search", {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("sale/products/search", {
         params: {
           query: this.query
         }
@@ -2282,7 +2286,7 @@ __webpack_require__.r(__webpack_exports__);
     addProduct: function addProduct(item) {
       var _this2 = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('temp/sale/store', {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('sale/temp/sale/store', {
         item: item
       }).then(function (response) {
         return console.log(response), _this2.cleanInputs();
@@ -2387,7 +2391,7 @@ __webpack_require__.r(__webpack_exports__);
     saveSale: function saveSale() {
       var _this = this;
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('save', this.saleDetails).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('sale/save', this.saleDetails).then(function (response) {
         return console.log(response), _this.HandleResponse(response.data), _this.handleAddProduct();
       })["catch"](function (err) {
         return console.log('Error', err);
@@ -44601,7 +44605,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Enter and leave animations can use different */\n/* durations and timing functions.              */\n.slide-fade-enter-active {\n  transition: all .4s ease;\n}\n.slide-fade-leave-active {\n  transition: all .4s cubic-bezier(1.0, 0.5, 0.8, 1.0);\n}\n.slide-fade-enter, .slide-fade-leave-to\n/* .slide-fade-leave-active below version 2.1.8 */ {\n  transform: translateX(10px);\n  opacity: 0;\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Enter and leave animations can use different */\n/* durations and timing functions.              */\n.slide-fade-enter-active {\n  transition: all .4s ease;\n}\n.slide-fade-leave-active {\n  transition: all .4s cubic-bezier(1.0, 0.5, 0.8, 1.0);\n}\n.slide-fade-enter, .slide-fade-leave-to\n/* .slide-fade-leave-active below version 2.1.8 */ {\n  transform: translateX(10px);\n  opacity: 0;\n}\n", ""]);
 
 // exports
 
@@ -70280,7 +70284,10 @@ var render = function() {
                       type: "number",
                       name: "quantity",
                       id: "inputQty",
-                      placeholder: "e.g. 1000"
+                      min: "0",
+                      step: ".01",
+                      placeholder: "e.g. 1000",
+                      required: _vm.show
                     }
                   }),
                   _vm._v(" "),
@@ -70309,7 +70316,8 @@ var render = function() {
                       name: "price",
                       min: "0",
                       step: ".01",
-                      placeholder: "e.g. 200"
+                      placeholder: "e.g. 200",
+                      required: _vm.show
                     }
                   }),
                   _vm._v(" "),
@@ -70614,7 +70622,7 @@ var render = function() {
                   { key: result.id, staticClass: "list-group-item" },
                   [
                     _c("div", {
-                      domProps: { textContent: _vm._s(result.title) },
+                      domProps: { textContent: _vm._s(result.name) },
                       on: {
                         click: function($event) {
                           return _vm.showModal(result)
@@ -70637,13 +70645,13 @@ var render = function() {
             "header-class": "bg-primary-dark text-white",
             id: "modal-1",
             "hide-footer": "",
-            title: _vm.item.title
+            title: _vm.item.name
           }
         },
         [
           _c("p", { staticClass: "text-black" }, [
             _vm._v("Disponible en inventario: "),
-            _c("span", [_vm._v(_vm._s(_vm.item.searchable.in_stock))])
+            _c("span", [_vm._v(_vm._s(_vm.item.in_stock))])
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
@@ -70721,7 +70729,7 @@ var render = function() {
                     click: function($event) {
                       return _vm.addProduct({
                         toAdd: _vm.toAdd,
-                        details: _vm.item.searchable
+                        details: _vm.item
                       })
                     }
                   }

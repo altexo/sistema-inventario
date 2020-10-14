@@ -13,9 +13,6 @@
                     @endif
                     <label for="inputProductName">Nombre el producto</label>
                     <input required type="text" class="form-control" id="inputProductName" name="product_name">
-                    @error('product_name')
-                        <p class="text-danger">{{ $message }}</p>
-                    @enderror
                 </div>
                 {{-- <div class="form-group">
                     @if($errors->has('type'))

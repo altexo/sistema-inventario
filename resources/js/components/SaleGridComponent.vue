@@ -46,13 +46,13 @@ export default {
    methods:{
      removeFromSale(id, index){
        //Faltan validaciones y handle error
-       axios.get('temo/sale/delete/'+id).then(response => (
+       axios.get('sale/temp/sale/delete/'+id).then(response => (
         //  this.$delete(this.products, index)
         this.getTempSale()))
          .catch(err => (console.log('Error deleting', err)))
      },
      getTempSale(){
-       axios.get('temp/sale/get').then(response => (console.log(response.data), this.products = response.data.in_sale, this.total = response.data.total)).catch(err => (console.log(err)))
+       axios.get('sale/temp/sale/get').then(response => (console.log(response.data), this.products = response.data.in_sale, this.total = response.data.total)).catch(err => (console.log(err)))
      }
    }
 };

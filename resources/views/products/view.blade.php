@@ -3,7 +3,7 @@
 @section('content')
 <div class="col-md-12 row">
 
-    <a href="{{URL::previous() }}" class="btn btn-danger mb-3 mr-3"><img src="{{url('images/arrow-left-solid.svg')}}" alt="Volcer" class="svg-action-icon-button red-hover">  Volver</a>
+    <a href="{{route('products.index') }}" class="btn btn-danger mb-3 mr-3"><img src="{{url('images/arrow-left-solid.svg')}}" alt="Volcer" class="svg-action-icon-button red-hover">  Volver</a>
     {{-- <a href="#" class="btn btn-primary mb-3"><img src="{{url('images/box-open-solid-white.svg')}}" alt="Watch" class="svg-action-icon-button"> Registrar entrada a inventario</a> --}}
 </div>
 
@@ -16,7 +16,7 @@
             </div>
             <div class="col-md-5 card shadow text-white mb-3 bg-success rounded">
                 <div class="card-header">Ultimo precio de compra:</div>
-                <h5 class="card-title p-3">{{$product->last_price}}</h5>
+                <h5 class="card-title p-3">$ @convert($product->last_price)</h5>
             </div>
         </div>
     </div>
@@ -82,7 +82,7 @@
                         <tr>
                             <td>{{ Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $entry->created_at)->format('Y-m-d') }} </td>
                             <td>{{$entry->quantity}}</td>
-                            <td>{{$entry->price}}</td>
+                            <td>$ @convert($entry->price)</td>
                             <td>
                                 <form action="{{route('stock.destroy', $entry->id)}}" method="POST">
                                     <button class="btn btn-small btn-danger"  onclick="return confirm('Seguro quieres eliminar este registro?')">Eliminar</button>
