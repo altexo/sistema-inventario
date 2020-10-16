@@ -82,14 +82,16 @@ export default {
       if(response.success === true){
         this.responseMsg = "La venta  se guardó exitosamente."
         this.headerColor = "bg-success text-white"
-       
+        
+         this.printInvoice()
       }else{
-        this.responseMsg = "La venta no pudo guardarse correctamente."
+        this.responseMsg = response.message
         this.headerColor = "bg-danger text-white"
+        this.$refs["modal-response"].show();
         //Show error modal
       }
-      this.$refs["modal-response"].show();
-      this.printInvoice()
+      
+     
     },
     printInvoice(){
       window.open("print/invoice", "_blank");  

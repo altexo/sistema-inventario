@@ -36,6 +36,7 @@ class SaleController extends Controller
     public function createSale(Request $request){
         $success = false;
         $msg = "";
+       
         //Validaciones y transaccion
         $request->validate([
             'invoiceSale' => 'required',
@@ -47,6 +48,7 @@ class SaleController extends Controller
         }
         try {
             DB::transaction(function () use ($tempSales, $request) { 
+                
                 $total = 0;
                 foreach($tempSales as $ts){
                     $total = $total+($ts->sale_price * $ts->quantity);
@@ -61,6 +63,9 @@ class SaleController extends Controller
                 foreach ($tempSales as $ts) {
                     $saleDetails = new SalesDetails;
                     $product = Product::find($ts->product_id);
+                    if ($ts->quantity > $product->in_stock){
+                        throw new \Exception("Uno de los productos no tiene suficiente inventario para esta venta. Por favor revisa los productos que se añadieron a esta venta y vuelva intentar");
+                    }
                     $product->in_stock = $product->in_stock - $ts->quantity;
                     $saleDetails->product_id = $ts->product_id;
                     $saleDetails->sale_id = $sale->id;
@@ -71,9 +76,10 @@ class SaleController extends Controller
                     $ts->delete();
                 }        
                  
-                }, 2);
+                }, 1);
                
-                $success = true;
+                    $success = true;
+
             } catch (\Exception $e) {
                 $msg = $e->getMessage();
             }
