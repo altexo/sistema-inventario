@@ -7,6 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <style>
+
+        .opacity{
+            opacity: 0 !important;
+        }
         body {
             font-family: Helvetica, Arial, Sans-Serif;
         }
@@ -21,7 +25,7 @@
         th,
         td,
         thead {
-            border: 1px solid black;
+            border: 1px solid rgba(255, 0, 0, 0);
             border-spacing: 0px;
 
 
@@ -88,8 +92,8 @@
 
         @media print {
             .th-color-gray {
-                background-color: gainsboro;
-                -webkit-print-color-adjust: exact;
+                /* background-color: gainsboro; */
+                /* -webkit-print-color-adjust: exact; */
             }
         }
 
@@ -109,7 +113,7 @@
 
         .notes-container {
             height: 65px;
-            border: 1px solid;
+            border: 1px rgba(255, 0, 0, 0);
             vertical-align: top;
             width: 90%;
             margin: auto;
@@ -163,25 +167,25 @@
         <div class="container details-section">
             <div class="bussines-info-section row center center-text">
                 <div class="row center"></div>
-                <img class="logo" src="{{ url('images/LOGO_COGELADORA_CAPYTAN.png') }}" alt="">
+                <img class="logo" style="opacity:0" src="{{ url('images/LOGO_COGELADORA_CAPYTAN.png') }}" alt="">
                 {{-- <h2><span>CONGELADORA</span><span>CAPYTAN</span><span>SA DE CV</span>
                 </h2> --}}
-                <p class="bussines-info-text">Libramiento Benito Juárez 5521 Campo 10<br>Culiacán, Sinaloa, México 80396
+                <p class="bussines-info-text" style="color:rgba(255, 0, 0, 0);">Libramiento Benito Juárez 5521 Campo 10<br>Culiacán, Sinaloa, México 80396
                     <br> Teléfono 6677605235<br>congeladora@capytan.com <br> www.capytan.com</p>
             </div>
             <div class="sale-client-section row">
                 <div class="center center-text">
-                    <h1 style="margin-bottom: 10px; font-weight: 400; ">VENTA</h1>
+                    <h1 style="margin-bottom: 10px; font-weight: 400; color:rgba(255, 0, 0, 0);">VENTA</h1>
                 </div>
                 <div class="center">
                     <table class="center" style="width: 80%">
                         <thead>
                             <tr class="center-text">
-                                <td class="th-color-gray">CLIENTE</td>
+                                <td class="th-color-gray" style="color:rgba(255, 0, 0, 0);">CLIENTE</td>
                             </tr>
                         <tbody>
                             <tr>
-                                <td class="center-text" style="padding: 20px">{{$sale->client}}</td>
+                                <td class="center-text " style="padding: 20px">{{$sale->client}}</td>
                             </tr>
                         </tbody>
                         </thead>
@@ -194,11 +198,11 @@
                 <table class="center" style="width: 150px; border-bottom: 0px">
                     <thead>
                         <tr class="center-text">
-                            <td class="th-color-gray">SALIDA</td>
+                            <td class="th-color-gray" style="color:rgba(255, 0, 0, 0);">SALIDA</td>
                         </tr>
                     <tbody>
                         <tr>
-                            <td class="center-text" style="padding: 8px">{Salida}</td>
+                            <td class="center-text" style="padding: 8px"></td>
                         </tr>
                     </tbody>
                     </thead>
@@ -207,13 +211,13 @@
                 <table class="center" style="width: 150px">
                     <thead>
                         <tr class="center-text">
-                            <th class="th-color-gray" style="font-weight: 400;" colspan="3">FECHA</th>
+                            <th class="th-color-gray" style="font-weight: 400; color:rgba(255, 0, 0, 0);" colspan="3">FECHA</th>
                         </tr>
                     <tbody>
                         <tr>
-                            <td class="center-text" style="padding: 8px">{{$sale->created_at->format('d')}}</td>
-                            <td class="center-text" style="padding: 8px">{{$sale->created_at->format('m')}}</td>
-                            <td class="center-text" style="padding: 8px">{{$sale->created_at->format('y')}}</td>
+                            <td class="center-text " style="padding: 8px">{{$sale->created_at->format('d')}}</td>
+                            <td class="center-text " style="padding: 8px">{{$sale->created_at->format('m')}}</td>
+                            <td class="center-text " style="padding: 8px">{{$sale->created_at->format('y')}}</td>
                         </tr>
                     </tbody>
                     </thead>
@@ -225,19 +229,19 @@
             <table class="product-table center-text">
                 <thead>
                     <tr class="th-color-gray product-table-th">
-                        <td style="width:35%">PRODUCTO</td>
-                        <td style="width:35%">KILOGRAMOS</td>
-                        <td style="width:15%">PRECIO</td>
-                        <td style="width:15%">IMPORTE</td>
+                        <td style="width:35%; color:rgba(255, 0, 0, 0);">PRODUCTO</td>
+                        <td style="width:35%; color:rgba(255, 0, 0, 0);">KILOGRAMOS</td>
+                        <td style="width:15%; color:rgba(255, 0, 0, 0);">PRECIO</td>
+                        <td style="width:15%; color:rgba(255, 0, 0, 0);">IMPORTE</td>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ($sale_details as $sale_detail)
                         <tr class="product-table-details">
-                            <td>{{$sale_detail->name}}</td>
-                            <td>{{$sale_detail->quantity}}</td>
-                            <td>{{$sale_detail->sale_price}}</td>
-                            <td>@convert($sale_detail->sale_price * $sale_detail->quantity)</td>
+                            <td class="">{{$sale_detail->name}}</td>
+                            <td class="">{{$sale_detail->quantity}}</td>
+                            <td class="">{{$sale_detail->sale_price}}</td>
+                            <td class="">@convert($sale_detail->sale_price * $sale_detail->quantity)</td>
                         </tr>
                     @empty
                         <tr>
@@ -246,8 +250,8 @@
                         @endforelse
                     <tr class="product-table-details">
                         <td colspan="2" style="border:none"></td>
-                        <td class="th-color-gray">Total</td>
-                        <td>@convert($sale->total)</td>
+                        <td class="th-color-gray" style="color:rgba(255, 0, 0, 0);">Total</td>
+                        <td class="">@convert($sale->total)</td>
                     </tr>
                 </tbody>
             </table>
@@ -256,13 +260,13 @@
         <div class="center footer-container">
             <div class="center footer-block">
                 <div class="sign-container">
-                    <hr>
+                    {{-- <hr> --}}
                 </div>
-                <h4 class="center-text">AUTORIZA</h4>
+                {{-- <h4 class="center-text">AUTORIZA</h4> --}}
             </div>
             <div class="center footer-block">
                 <div class="notes-container ">
-                    <p>{{$sale->description}}</p>
+                    <p class="">{{$sale->description}}</p>
                 </div>
                 <h4 class="center-text" style="margin-top: 9px;">NOTAS</h4>
             </div>
@@ -272,7 +276,7 @@
 </body>
 <script>
     window.onload = (() => {
-        window.print()
+       window.print()
     })
 
 </script>
